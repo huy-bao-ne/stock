@@ -1,0 +1,104 @@
+# ================================================================
+# Financial Factor Analysis Engine v3 — Config
+# Nguồn dữ liệu: vnstock 
+# ================================================================
+
+vnstock:
+  source: "VCI"
+  rate_limit:
+    delay_each_call: 1.5
+    batch_size: 20
+    batch_pause: 65
+    max_retries: 3
+    retry_delay: 10
+
+sectors:
+  BANKING:
+    tickers: ["VCB", "BID", "CTG", "TCB", "VPB"]
+    factor_set: "banking"
+    data_dir: "data/banking"
+    processor: "banking"
+    industry_name: "Ngân hàng"
+
+  REALESTATE:
+    tickers: ["VIC", "VHM", "KSF", "VRE", "BCM"]
+    factor_set: "realestate"
+    data_dir: "data/realestate"
+    processor: "nonbanking"
+    industry_name: "Bất động sản"
+
+  TECHNOLOGY:
+    tickers: ["FPT", "CTR", "CMG", "SGT", "ELC"]
+    factor_set: "technology"
+    data_dir: "data/technology"
+    processor: "nonbanking"
+    industry_name: "Công nghệ và thông tin"
+
+  FOOD:
+    tickers: ["MCH", "VNM", "MSN", "SAB", "SBT"]
+    factor_set: "food"
+    data_dir: "data/food"
+    processor: "nonbanking"
+    industry_name: "Thực phẩm - Đồ uống"
+
+  # === 6 NGÀNH MỚI ===
+  CONSTRUCTION:
+    tickers: ["THD", "REE", "HUT", "LGC", "VCG"]
+    factor_set: "nonbanking"
+    data_dir: "data/construction"
+    processor: "nonbanking"
+    industry_name: "Xây dựng"
+
+  TRANSPORT:
+    tickers: ["VJC", "HVN", "GMD", "VTP", "PVT"]
+    factor_set: "nonbanking"
+    data_dir: "data/transport"
+    processor: "nonbanking"
+    industry_name: "Vận tải - Kho bãi"
+
+  CHEMICALS:
+    tickers: ["GVR", "DCM", "DGC", "DPM", "BMP"]
+    factor_set: "nonbanking"
+    data_dir: "data/chemicals"
+    processor: "nonbanking"
+    industry_name: "SX Nhựa - Hóa chất"
+
+  UTILITIES:
+    tickers: ["GAS", "POW", "PGV", "IDC", "SIP"]
+    factor_set: "nonbanking"
+    data_dir: "data/utilities"
+    processor: "nonbanking"
+    industry_name: "Tiện ích"
+
+  SECURITIES:
+    tickers: ["SSI", "VND", "HCM", "MBS", "VCI"]
+    factor_set: "nonbanking"
+    data_dir: "data/securities"
+    processor: "nonbanking"
+    industry_name: "Chứng khoán"
+
+  HEALTHCARE:
+    tickers: ["DHG", "IMP", "DHT", "DBD", "TRA"]
+    factor_set: "nonbanking"
+    data_dir: "data/healthcare"
+    processor: "nonbanking"
+    industry_name: "Chăm sóc sức khỏe"
+
+years:
+  financial: [2018, 2019, 2020, 2021, 2022, 2023, 2024]
+  price_start: "2018-01-01"
+  price_end:   "2024-12-31"
+
+processing:
+  unit_divisor: 1000000000
+  round_decimals: 2
+  partial_year_flag: true
+
+analysis:
+  min_observations: 8
+  exclude_partial_year: true
+  p_value_threshold: 0.05
+
+output:
+  master_index:   "data/master/master_index.csv"
+  results_suffix: "factor_results.csv"

@@ -1,0 +1,26 @@
+﻿xếp_hạng,chỉ_báo,độ_tương_quan_%,kết_luận,độ_mạnh,p_value,có_ý_nghĩa_thống_kê,có_ý_nghĩa_sau_bonferroni,bonferroni_threshold,số_quan_sát
+1,vay_ngắn_hạn_% tăng trưởng,-60.2%,Nghịch biến,Mạnh,0.0009,True,True,0.001923,27
+2,tài_sản_ngắn_hạn_% tăng trưởng,-56.6%,Nghịch biến,Trung bình,0.0021,True,False,0.001923,27
+3,tổng_tài_sản_% tăng trưởng,-54.9%,Nghịch biến,Trung bình,0.003,True,False,0.001923,27
+4,long_debt_ratio_%,+43.2%,Đồng biến,Trung bình,0.0171,True,False,0.001923,30
+5,roe_%,+30.3%,Đồng biến,Yếu,0.1033,False,False,0.001923,30
+6,xây_dựng_dở_dang_% tăng trưởng,-28.3%,Nghịch biến,Yếu,0.1531,False,False,0.001923,27
+7,asset_turnover,+26.6%,Đồng biến,Yếu,0.1559,False,False,0.001923,30
+8,lợi_nhuận_gộp_% tăng trưởng,+22.2%,Đồng biến,Yếu,0.2653,False,False,0.001923,27
+9,lưu_chuyển_tiền_hđkd_% tăng trưởng,+20.1%,Đồng biến,Yếu,0.3151,False,False,0.001923,27
+10,tài_sản_dài_hạn_% tăng trưởng,-19.9%,Nghịch biến,Rất yếu,0.3196,False,False,0.001923,27
+11,debt_ratio_%,+17.6%,Đồng biến,Rất yếu,0.351,False,False,0.001923,30
+12,de_ratio,+17.6%,Đồng biến,Rất yếu,0.351,False,False,0.001923,30
+13,short_debt_ratio_%,+16.1%,Đồng biến,Rất yếu,0.3945,False,False,0.001923,30
+14,người_mua_trả_tiền_trước_% tăng trưởng,-14.8%,Nghịch biến,Rất yếu,0.4621,False,False,0.001923,27
+15,eps_cơ_bản,+14.6%,Đồng biến,Rất yếu,0.4423,False,False,0.001923,30
+16,hàng_tồn_kho_net_% tăng trưởng,-11.4%,Nghịch biến,Rất yếu,0.5707,False,False,0.001923,27
+17,roa_%,+11.1%,Đồng biến,Rất yếu,0.5592,False,False,0.001923,30
+18,doanh_thu_thuần_% tăng trưởng,+10.4%,Đồng biến,Rất yếu,0.6064,False,False,0.001923,27
+19,tỷ_lệ_đặt_cọc_%,+7.3%,Đồng biến,Rất yếu,0.7024,False,False,0.001923,30
+20,vay_dài_hạn_% tăng trưởng,+6.8%,Đồng biến,Rất yếu,0.7347,False,False,0.001923,27
+21,eps_cơ_bản_% tăng trưởng,-6.3%,Nghịch biến,Rất yếu,0.7554,False,False,0.001923,27
+22,lợi_nhuận_sau_thuế_% tăng trưởng,-5.7%,Nghịch biến,Rất yếu,0.7762,False,False,0.001923,27
+23,gross_margin_%,-3.5%,Nghịch biến,Rất yếu,0.8528,False,False,0.001923,30
+24,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+1.9%,Đồng biến,Rất yếu,0.9254,False,False,0.001923,27
+25,net_margin_%,-1.4%,Nghịch biến,Rất yếu,0.9433,False,False,0.001923,30

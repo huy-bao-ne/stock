@@ -1,0 +1,13 @@
+\U0001f4e6 Vnai 2.4.9 is available
+Current: 2.4.8 (Python 3.13)
+Update: pip install vnai --upgrade
+Release: https://pypi.org/project/vnai/#history
+INFO:     Started server process [3364]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8003 (Press CTRL+C to quit)
+Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+INFO:     127.0.0.1:58572 - "POST /api/ask_agent HTTP/1.1" 200 OK
+Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+INFO:     127.0.0.1:61327 - "POST /api/ask_agent HTTP/1.1" 200 OK

@@ -1,0 +1,12 @@
+{
+  "FPT": {
+    "quy": "2025-Q4",
+    "doanh_thu": 1000,
+    "lnst": 200,
+    "no_phai_tra": 500,
+    "eps": 1.5,
+    "bien_ln_gop": 0.2,
+    "roe": 0.1,
+    "pe": 10
+  }
+}

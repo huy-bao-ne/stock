@@ -1,0 +1,26 @@
+﻿mã_chứng_khoán,chỉ_báo,độ_tương_quan_%,kết_luận,độ_mạnh,p_value,có_ý_nghĩa_thống_kê,có_ý_nghĩa_sau_bonferroni,số_quan_sát
+BID,cir_%,+85.7%,Đồng biến,Rất mạnh,0.0137,True,False,7
+BID,tổng_thu_nhập_hoạt_động_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+BID,chứng_khoán_đầu_tư_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+BID,lợi_nhuận_sau_thuế_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+BID,tổng_tài_sản_% tăng trưởng,-60.0%,Nghịch biến,Mạnh,0.208,False,False,6
+CTG,tỷ_lệ_dự_phòng_%,-96.4%,Nghịch biến,Rất mạnh,0.0005,True,True,7
+CTG,roe_%,+78.6%,Đồng biến,Mạnh,0.0362,True,False,7
+CTG,roa_%,+78.6%,Đồng biến,Mạnh,0.0362,True,False,7
+CTG,tỷ_lệ_nợ_%,-75.0%,Nghịch biến,Mạnh,0.0522,False,False,7
+CTG,eps_cơ_bản,+73.9%,Đồng biến,Mạnh,0.0579,False,False,7
+TCB,chứng_khoán_đầu_tư_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+TCB,thu_nhập_lãi_thuần_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+TCB,tổng_thu_nhập_hoạt_động_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+TCB,lợi_nhuận_trước_dự_phòng_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+TCB,eps_cơ_bản_% tăng trưởng,+60.0%,Đồng biến,Mạnh,0.208,False,False,6
+VCB,lợi_nhuận_trước_dự_phòng_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+VCB,tiền_gửi_khách_hàng_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+VCB,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+42.9%,Đồng biến,Trung bình,0.3965,False,False,6
+VCB,cho_vay_khách_hàng_% tăng trưởng,-42.9%,Nghịch biến,Trung bình,0.3965,False,False,6
+VCB,tổng_thu_nhập_hoạt_động_% tăng trưởng,-42.9%,Nghịch biến,Trung bình,0.3965,False,False,6
+VPB,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+VPB,tổng_thu_nhập_hoạt_động_% tăng trưởng,-71.4%,Nghịch biến,Mạnh,0.1108,False,False,6
+VPB,tiền_gửi_khách_hàng_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+VPB,thu_nhập_lãi_thuần_% tăng trưởng,-54.3%,Nghịch biến,Trung bình,0.2657,False,False,6
+VPB,lợi_nhuận_sau_thuế_% tăng trưởng,-48.6%,Nghịch biến,Trung bình,0.3287,False,False,6

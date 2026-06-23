@@ -1,0 +1,23 @@
+﻿xếp_hạng,chỉ_báo,độ_tương_quan_%,kết_luận,độ_mạnh,p_value,có_ý_nghĩa_thống_kê,có_ý_nghĩa_sau_bonferroni,bonferroni_threshold,số_quan_sát
+1,eps_cơ_bản_% tăng trưởng,+28.9%,Đồng biến,Yếu,0.1441,False,False,0.002174,27
+2,asset_turnover,-26.2%,Nghịch biến,Yếu,0.1543,False,False,0.002174,31
+3,vay_dài_hạn_% tăng trưởng,+26.1%,Đồng biến,Yếu,0.1891,False,False,0.002174,27
+4,lợi_nhuận_gộp_% tăng trưởng,-24.7%,Nghịch biến,Yếu,0.1959,False,False,0.002174,29
+5,doanh_thu_thuần_% tăng trưởng,-24.0%,Nghịch biến,Yếu,0.21,False,False,0.002174,29
+6,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+16.0%,Đồng biến,Rất yếu,0.4082,False,False,0.002174,29
+7,debt_ratio_%,+15.4%,Đồng biến,Rất yếu,0.4068,False,False,0.002174,31
+8,de_ratio,+15.4%,Đồng biến,Rất yếu,0.4068,False,False,0.002174,31
+9,vay_ngắn_hạn_% tăng trưởng,+15.2%,Đồng biến,Rất yếu,0.4305,False,False,0.002174,29
+10,lợi_nhuận_sau_thuế_% tăng trưởng,+14.2%,Đồng biến,Rất yếu,0.4613,False,False,0.002174,29
+11,hàng_tồn_kho_net_% tăng trưởng,+12.2%,Đồng biến,Rất yếu,0.5295,False,False,0.002174,29
+12,eps_cơ_bản,+11.4%,Đồng biến,Rất yếu,0.5425,False,False,0.002174,31
+13,roe_%,+11.3%,Đồng biến,Rất yếu,0.5454,False,False,0.002174,31
+14,tài_sản_dài_hạn_% tăng trưởng,+10.2%,Đồng biến,Rất yếu,0.5986,False,False,0.002174,29
+15,tổng_tài_sản_% tăng trưởng,+10.2%,Đồng biến,Rất yếu,0.6004,False,False,0.002174,29
+16,net_margin_%,+10.1%,Đồng biến,Rất yếu,0.5895,False,False,0.002174,31
+17,gross_margin_%,-8.0%,Nghịch biến,Rất yếu,0.6694,False,False,0.002174,31
+18,tài_sản_ngắn_hạn_% tăng trưởng,+7.7%,Đồng biến,Rất yếu,0.6919,False,False,0.002174,29
+19,long_debt_ratio_%,-6.9%,Nghịch biến,Rất yếu,0.7141,False,False,0.002174,31
+20,short_debt_ratio_%,+5.7%,Đồng biến,Rất yếu,0.7613,False,False,0.002174,31
+21,lưu_chuyển_tiền_hđkd_% tăng trưởng,-5.1%,Nghịch biến,Rất yếu,0.7938,False,False,0.002174,29
+22,roa_%,-3.8%,Nghịch biến,Rất yếu,0.8413,False,False,0.002174,31

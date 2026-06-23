@@ -1,0 +1,26 @@
+﻿mã_chứng_khoán,chỉ_báo,độ_tương_quan_%,kết_luận,độ_mạnh,p_value,có_ý_nghĩa_thống_kê,có_ý_nghĩa_sau_bonferroni,số_quan_sát
+BCM,vay_ngắn_hạn_% tăng trưởng,-88.6%,Nghịch biến,Rất mạnh,0.0188,True,False,6
+BCM,eps_cơ_bản_% tăng trưởng,-82.9%,Nghịch biến,Rất mạnh,0.0416,True,False,6
+BCM,lợi_nhuận_sau_thuế_% tăng trưởng,-82.9%,Nghịch biến,Rất mạnh,0.0416,True,False,6
+BCM,xây_dựng_dở_dang_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+BCM,tỷ_lệ_đặt_cọc_%,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+KSF,vay_ngắn_hạn_% tăng trưởng,-100.0%,Nghịch biến,Rất mạnh,0.0,True,True,3
+KSF,tổng_tài_sản_% tăng trưởng,-100.0%,Nghịch biến,Rất mạnh,0.0,True,True,3
+KSF,hàng_tồn_kho_net_% tăng trưởng,-100.0%,Nghịch biến,Rất mạnh,0.0,True,True,3
+KSF,short_debt_ratio_%,-100.0%,Nghịch biến,Rất mạnh,0.0,True,True,3
+KSF,roe_%,+100.0%,Đồng biến,Rất mạnh,0.0,True,True,3
+VHM,lợi_nhuận_sau_thuế_% tăng trưởng,+88.6%,Đồng biến,Rất mạnh,0.0188,True,False,6
+VHM,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+88.6%,Đồng biến,Rất mạnh,0.0188,True,False,6
+VHM,asset_turnover,+78.6%,Đồng biến,Mạnh,0.0362,True,False,7
+VHM,lợi_nhuận_gộp_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+VHM,xây_dựng_dở_dang_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+VIC,asset_turnover,+96.4%,Đồng biến,Rất mạnh,0.0005,True,True,7
+VIC,tổng_vốn_chủ_sở_hữu_% tăng trưởng,+94.3%,Đồng biến,Rất mạnh,0.0048,True,False,6
+VIC,gross_margin_%,+85.7%,Đồng biến,Rất mạnh,0.0137,True,False,7
+VIC,debt_ratio_%,-67.9%,Nghịch biến,Mạnh,0.0938,False,False,7
+VIC,de_ratio,-67.9%,Nghịch biến,Mạnh,0.0938,False,False,7
+VRE,tổng_tài_sản_% tăng trưởng,-100.0%,Nghịch biến,Rất mạnh,0.0,True,True,6
+VRE,tổng_vốn_chủ_sở_hữu_% tăng trưởng,-82.9%,Nghịch biến,Rất mạnh,0.0416,True,False,6
+VRE,tài_sản_dài_hạn_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+VRE,vay_ngắn_hạn_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+VRE,tài_sản_ngắn_hạn_% tăng trưởng,-60.0%,Nghịch biến,Mạnh,0.208,False,False,6

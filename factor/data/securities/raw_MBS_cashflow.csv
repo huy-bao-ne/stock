@@ -1,0 +1,149 @@
+﻿item,item_en,item_id,2025,2024,2023,2022,2021,2020,2019,2018
+LỢI NHUẬN TRƯỚC THUẾ,NET PROFIT/(LOSS) BEFORE TAX,cfa1,1415006331708.0,930644050935.0,716146789713.0,660568842658.0,736275485072.0,336105078681.0,288578263816.0,202731692933.0
+Khấu hao tài sản cố định,Depreciation and amortization,cfa2,53645235277.0,60909312223.0,57668969763.0,44249438254.0,22103983238.0,14791178689.0,11811400515.0,8408736167.0
+Các khoản dự phòng,Provisions,cfa3,-104706581722.0,43908765761.0,7205619667.0,2134860025.0,24840055283.0,-37538398046.0,-61647629356.0,92212038648.0
+"Lãi, lỗ chênh lệch tỷ giá hối đoái chưa thực hiện",Unrealized foreign exchange gain/(loss),cfa4,-77617.0,-91861.0,0.0,-2821974887.0,0.0,-12586680.0,0.0,-5207178.0
+"Lãi, lỗ hoạt động đầu tư",Profit/(loss) from investing activities,cfa6,-7004894228.0,-6525541776.0,-32905946.0,0.0,0.0,0.0,0.0,0.0
+Chi phí lãi vay,Interest expense,cfa7,844353981743.0,541247874447.0,369768492617.0,393221026423.0,319880432482.0,187285347054.0,174478690303.0,183423790642.0
+Dự thu lãi và cổ tức,Interest income and dividend,cfa8,-73088443717.0,-171733606768.0,-231545521630.0,-160510533957.0,-80217061221.0,-37631356752.0,-22503477610.0,-16842208135.0
+Lợi nhuận từ hoạt động kinh doanh trước thay đổi vốn lưu động,Operating profit/(loss) before changes in WC,cfa9,-6641861075035.0,-5466242609056.0,-4660074733777.0,-588246299822.0,-6400343595442.0,-1820869270793.0,-561291960255.0,-116118201415.0
+"(-) Tăng, (+) giảm các khoản phải thu khác",Increase/(decrease) in receivables,cfa10,-3382166620.0,-2149821068.0,32294865621.0,5286054598.0,-17862885165.0,-146476064883.0,11236376641.0,-90725942985.0
+Tăng/giảm hàng tồn kho (Trước năm 2016),Increase/(decrease) in inventories (Before 2016),cfa11,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(+) Tăng, (-) giảm các khoản phải trả, phải nộp khác",(Increase)/decrease in payables,cfa12,22237848558.0,-22627699400.0,-109215106896.0,-817871739684.0,-1848377654522.0,496880531201.0,585571694935.0,-525301411759.0
+Tăng/giảm chi phí trả trước,Increase/(decrease) in prepaid expenses,cfa13,4099990426.0,16709782051.0,18417235222.0,10312726363.0,-35387042074.0,5835910993.0,984861687.0,2567417610.0
+Tiền lãi vay đã trả,Interest paid,cfa14,-781357606764.0,-494937451882.0,-337806960611.0,-409817342067.0,-284378622542.0,-196658940644.0,-185146638753.0,-189619367029.0
+Thuế TNDN CTCK đã nộp,Business Income Tax paid,cfa15,-218981446448.0,-151903676615.0,-152703874612.0,-120897858997.0,-133859888738.0,-52694394141.0,-40589726458.0,-35338350829.0
+Tiền thu khác từ hoạt động kinh doanh,Other receipts from operating activities,cfa16,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền chi khác cho hoạt động kinh doanh,Other payments on operating activitie,cfa17,-49696422719.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lưu chuyển thuần từ hoạt động kinh doanh,Net cash inflows/(outflows) from operating activities,cfa18,-4495472095049.0,-4077429819631.0,-3751683180597.0,357833190469.0,-5390220792168.0,-1364076309283.0,-192314841575.0,351808741334.0
+"Tiền chi để mua sắm, xây dựng TSCĐ, BĐSĐT và các tài sản dài hạn khác",Purchases of fixed assets and other long term assets,cfa19,-15023026510.0,-9801226425.0,-73089860121.0,-113916688278.0,-90924742266.0,-17384625098.0,-34839773054.0,-20692863079.0
+"Tiền thu từ thanh lý, nhượng bán TSCĐ, BĐSĐT và các tài sản dài hạn khác",Proceeds from disposal of fixed assets,cfa20,305076625.0,386818182.0,66462148.0,759885104.0,291755316.0,-326800000.0,382325455.0,9200710.0
+"Tiền chi cho vay, mua các công cụ nợ của đơn vị khác (Trước năm 2016)","Loans granted, purchases of debt instruments (Before 2016)",cfa21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Tiền thu hồi cho vay, bán lại các công cụ nợ của đơn vị khác (Trước năm 2016)","Collection of loans, proceeds from sales of debts instruments (Before 2016)",cfa22,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Tiền chi đầu tư góp vốn vào công ty con, công ty liên doanh, liên kết và đầu tư khác",Investments in other entities,cfa23,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Tiền thu hồi các khoản đầu tư góp vốn vào công ty con, công ty liên doanh, liên kết và đầu tư khác",Proceeds from divestment in other entities,cfa24,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền thu về cổ tức lợi nhuận được chia từ các khoản đầu tư tài chính dài hạn,Dividends and interest received,cfa25,6699817603.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lưu chuyển tiền thuần từ hoạt động đầu tư,Net cash inflows/(outflows) from investing activities,cfa26,-8018132282.0,-9414408243.0,-73023397973.0,-113156803174.0,-90632986950.0,-17711425098.0,-34457447599.0,-20683662369.0
+"Tiền thu từ phát hành cổ phiếu, nhận vốn góp của chủ sở hữu",Proceeds from issue of shares,cfa27,687339530000.0,1686988200000.0,0.0,1129747940000.0,786395880000.0,299953620000.0,0.0,0.0
+"Tiền chi trả vốn góp cho các chủ sở hữu, mua lại cổ phiếu của doanh nghiệp đã phát hành",Payments for share returns and repurchases,cfa28,0.0,0.0,0.0,-91404800.0,-532663500.0,-15822100.0,-9006500.0,-92101000.0
+Tiền vay gốc,Proceeds from borrowings,cfa29,54639373227681.0,38636046556035.0,52639893836214.0,13688383972494.0,17889566074290.0,7186788517998.0,3387437905520.0,2122548251528.0
+Tiền chi trả nợ gốc vay,Repayment of borrowings,cfa30,-49479027490816.0,-34509687440008.0,-48438873853521.0,-14986100000000.0,-13173205346778.0,-6258239264600.0,-3204534000000.0,-2256878260000.0
+Tiền chi trả nợ thuê tài chính,Finance lease principal payments,cfa31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Cổ tức, lợi nhuận đã trả cho chủ sở hữu",Dividends paid,cfa32,-686472757967.0,-524208536493.0,0.0,0.0,0.0,-164322801000.0,0.0,0.0
+Lưu chuyển thuần từ hoạt động tài chính,Net cash inflows/(outflows) from financing activities,cfa34,5161212508898.0,5289138779534.0,4201019982693.0,-168059492306.0,5502223944012.0,1064164250298.0,182894899020.0,-134422109472.0
+LƯU CHUYỂN TIỀN THUẦN TRONG KỲ,NET CASH INFLOWS/(OUTFLOWS),cfa35,657722281567.0,1202294551660.0,376313404123.0,76616894989.0,21370164894.0,-317623484083.0,-43877390154.0,196702969493.0
+TIỀN VÀ CÁC KHOẢN TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ,CASH AND CASH EQUIVALENTS AT THE BEGINNING OF PERIOD,cfa36,1773543835124.0,571249283464.0,194935879341.0,118318984352.0,96948819458.0,414572303541.0,458449693695.0,261746724202.0
+Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ,Effect of foreign exchange differences,cfa37,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+TIỀN VÀ CÁC KHOẢN TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ,CASH AND CASH EQUIVALENTS AT THE END OF PERIOD,cfa38,2431266116691.0,1773543835124.0,571249283464.0,194935879341.0,118318984352.0,96948819458.0,414572303541.0,458449693695.0
+Tăng/giảm chứng khoán kinh doanh (Trước năm 2016),Increase/(decrease) in trading securities (Before 2016),cfb50,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Phân bổ lợi thế thương mại,Amortization of goodwill,cfa103,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản điều chỉnh khác,Other adjustments,cfa104,-385081.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền vay Quỹ Hỗ trợ thanh toán,Loans from Settlement Assistance Fund received,cfs113,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền vay khác,Other loans received,cfs114,54639373227681.0,38636046556035.0,52639893836214.0,13688383972494.0,17889566074290.0,7186788517998.0,3387437905520.0,2122548251528.0
+Tiền chi trả gốc vay Quỹ Hỗ trợ thanh toán,Loans Principal repaid to Settlement Assistance Fund,cfs115,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền chi trả nợ gốc vay tài sản tài chính,Financial assets loans principal repaid,cfs116,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền chi trả gốc nợ vay khác,Other Loans principal repaid,cfs117,-49479027490816.0,-34509687440008.0,-48438873853521.0,-14986100000000.0,-13173205346778.0,-6258239264600.0,-3204534000000.0,-2256878260000.0
+"Tiền mặt, tiền gửi ngân hàng đầu kỳ",Cash and bank deposit at the beginning of the period,cfs118,1749543835124.0,441249283464.0,24935879341.0,91018984352.0,49648819458.0,237272303541.0,353049693695.0,261746724202.0
+Tiền gửi ngân hàng cho hoạt động CTCK,Bank deposit for the Securities company activities,cfs119,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản tương đương tiền,Cash equivalents,cfs120,24000000000.0,130000000000.0,170000000000.0,27300000000.0,47300000000.0,177300000000.0,105400000000.0,0.0
+"Tiền mặt, tiền gửi ngân hàng kỳ",Cash and bank deposit during the period,cfs121,2431266116691.0,1749543835124.0,441249283464.0,24935879341.0,91018984352.0,49648819458.0,237272303541.0,353049693695.0
+Tiền gửi ngân hàng cho hoạt động CTCK,Bank deposit for the Securities company activities,cfs122,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản tương đương tiền,Cash equivalents,cfs123,0.0,24000000000.0,130000000000.0,170000000000.0,27300000000.0,47300000000.0,177300000000.0,105400000000.0
+Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ,Effect of changes in foreign currency exchange rates,cfs124,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền thu bán chứng khoán môi giới cho khách hàng,Cash inflow from securities sales broking,cfs125,372162789883927.0,243148294750444.0,204883829405670.0,224964387550753.0,276427382628868.0,84523929035310.0,54972633601648.0,90138260750450.0
+Tiền chi mua chứng khoán môi giới cho khách hàng,Cash outflow from securities purchase broking,cfs126,-382148827732299.0,-247997854109762.0,-209033232369430.0,-222373311637508.0,-279119567459430.0,-85355222559350.0,-53730478824517.0,-90856387587400.0
+Tiền thu bán chứng khoán ủy thác của khách hàng,Cash inflow from mandated securities sales,cfs127,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền chi bán chứng khoán ủy thác của khách hàng,Cash outflow from mandated securities sales,cfs128,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Thu tiền từ tài khoản vãng lai của khách hàng (Trước năm 2016),Cash inflow from current account of clients (Before 2016),cfs129,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Chi tiền từ tài khoản vãng lai của khách hàng (Trước năm 2016),Cash outflow from current account of clients (Before 2016),cfs130,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Thu vay Quỹ Hỗ trợ thanh toán,Cash inflow on loan from Settlement Assistance Fund,cfs131,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Chi trả vay Quỹ Hỗ trợ thanh toán,Cash outflow on repaying loans from Settlement Assistance Fund,cfs132,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Nhận tiền gửi để thanh toán giao dịch chứng khoán của khách hàng,Cash received for the purpose of transaction of clients,cfs133,11188766988121.0,3995867134532.0,5308417160322.0,-3149552440020.0,3831698112731.0,2501638842073.0,0.0,462759276895.0
+Nhận tiền gửi của Nhà đầu tư cho hoạt động ủy thác đầu tư của khách hàng,Cash received for the purpose of mandated investment of clients,cfs134,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Chi trả phí lưu ký chứng khoán của khách hàng,Cash paid for depository fee of clients,cfs135,-21514744740.0,-16473190813.0,-14475365969.0,-12781817692.0,-11473058492.0,-8766216471.0,-8079400343.0,-9457769952.0
+Thu lỗi giao dịch chứng khoán,Cash received on securities transactions errors,cfs136,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Chi lỗi giao dịch chứng khoán,Cash paid on securities transaction errors,cfs137,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền thu của Tổ chức phát hành chứng khoán,Cash received from issuing organizations,cfs138,2192598756070.0,2576995057278.0,8407492323656.0,4673248482896.0,5752066162611.0,1940391733518.0,2224453079714.0,2201587026999.0
+Tiền chi trả Tổ chức phát hành chứng khoán,Cash paid to issuing organizations,cfs139,-2099967191070.0,-2580405881278.0,-8398991492916.0,-4699492344357.0,-5734171845245.0,-1940419972164.0,-2217450212054.0,-2199977194587.0
+"Lưu chuyển tiền hoạt động môi giới, ủy thác của khách hàng",Net cash inflows/(outflows) from brokerage and trust activities,cfs140,1273845960009.0,-873576239599.0,1153039661333.0,-597502205928.0,1145934541043.0,1661550862916.0,-649271179235.0,-263215497595.0
+TIỀN VÀ CÁC KHOẢN TƯƠNG ĐƯƠNG TIỀN ĐẦU KỲ CỦA KHÁCH HÀNG,CASH AND CASH EQUIVALENTS OF CUSTOMERS AT THE BEGINNING OF PERIOD,cfs141,3358932288854.0,4232508528453.0,3079468867120.0,3676971073048.0,2531036532005.0,869485669089.0,1518756848324.0,1781972345919.0
+Tiền gửi ngân hàng đầu kỳ,Cash and cash equivalent at the beginning of period,cfs142,3358932288854.0,4232508528453.0,3079468867120.0,3676971073048.0,2531036532005.0,869485669089.0,1518756848324.0,1781972345919.0
+Tiền gửi của NĐT về GDCK theo phương thức CTCK quản lý,Investors' deposit for securities transaction by Securities company managed method,cfs143,3181410092479.0,4030799136249.0,2658148303510.0,3624388650402.0,2516821135267.0,858050647695.0,1514979124473.0,1720500354967.0
+Trong đó: có kỳ hạn,In which: amounts which have specific term,cfs144,0.0,0.0,0.0,0.0,0.0,710646916601.0,1154820916966.0,0.0
+Tiền gửi tổng hợp GDCK cho khách hàng,Customers' general deposit for securities transactions,cfs145,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền gửi bù trừ và thanh toán GDCK,Deposit for securities clearing,cfs146,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền gửi của tổ chức phát hành,Issuing organization's deposit,cfs147,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Trong đó: có kỳ hạn,In which: amounts which have specific term,cfs148,171589439729.0,192365811558.0,420477813704.0,25495811279.0,5023102737.0,2214488747.0,1560058864.0,60864158377.0
+Tiền gửi của NĐT về GDCK theo phương thức NHTM quản lý (Trước năm 2016),Investors' deposit for securities transaction by commercial bank managed method (Before 2016),cfs149,5932756646.0,9343580646.0,842749906.0,27086611367.0,9192294001.0,9220532647.0,2217664987.0,607832575.0
+Trong đó: có kỳ hạn (Trước năm 2016),In which: amounts which have specific term (Before 2016),cfs150,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản tương đương tiền,Cash Equivalent,cfs151,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ,Effect of changes in foreign currency exchange rates,cfs152,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+TIỀN VÀ CÁC KHOẢN TƯƠNG ĐƯƠNG TIỀN CUỐI KỲ CỦA KHÁCH HÀNG,CASH AND CASH EQUIVALENTS OF CUSTOMERS AT THE END OF PERIOD,cfs153,4632778248863.0,3358932288854.0,4232508528453.0,3079468867120.0,3676971073048.0,2531036532005.0,869485669089.0,1518756848324.0
+Tiền gửi ngân hàng cuối kỳ,Cash and cash equivalent at the end of period,cfs154,4632778248863.0,3358932288854.0,4232508528453.0,3079468867120.0,3676971073048.0,2531036532005.0,869485669089.0,1518756848324.0
+Tiền gửi của NĐT về GDCK theo phương thức CTCK quản lý,Investors' deposit for securities transaction by Securities company managed method,cfs155,4432608837489.0,3181410092479.0,4030799136248.0,2658148303510.0,3624388650402.0,2516821135267.0,858050647695.0,1514979124473.0
+Trong đó: có kỳ hạn,In which: amounts which have specific term,cfs156,0.0,0.0,0.0,0.0,0.0,2413620553500.0,710646916601.0,0.0
+Tiền gửi của NĐT về GDCK theo phương thức NHTM quản lý (Trước năm 2016),Investors' deposit for securities transaction by commercial bank managed method (Before 2016),cfs157,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Trong đó: có kỳ hạn (Trước năm 2016),In which: amounts which have specific term (Before 2016),cfs158,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền gửi tổng hợp GDCK cho khách hàng,Customers' general deposit for securities transactions,cfs159,101605089728.0,171589439729.0,192365811559.0,420477813704.0,25495811279.0,5023102737.0,2214488747.0,1560058864.0
+Tiền gửi bù trừ và thanh toán GDCK,Deposit for securities clearing,cfs160,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền gửi của tổ chức phát hành,Issuing organization's deposit,cfs161,98564321646.0,5932756646.0,9343580646.0,842749906.0,27086611367.0,9192294001.0,9220532647.0,2217664987.0
+Trong đó: có kỳ hạn,In which: amounts which have specific term,cfs162,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản tương đương tiền,Cash Equivalent,cfs163,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ,Effect of changes in foreign currency exchange rates,cfs164,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Điều chỉnh cho các khoản,Adjustment,cfs165,713198834655.0,467806712026.0,203064654471.0,276272815858.0,286607409782.0,126894184265.0,102138983852.0,267197150144.0
+"Chi phí phải trả, chi phí trả trước",Accrued expenses,cfs166,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tăng các chi phí phi tiền tệ,Increase in non-cash expense,cfs167,31231181204.0,210630560.0,-702123682.0,-1342174509.0,-10039481963.0,-2754407057.0,-17405159558.0,7340187073.0
+Lỗ đánh giá giá trị các tài sản tài chính ghi nhận thông qua lãi/lỗ FVTPL,Loss on valuation of fair value through profit/loss financial assets,cfs168,31231181204.0,210630560.0,-702123682.0,-1342174509.0,-10039481963.0,-2754407057.0,-17405159558.0,7340187073.0
+Lỗ đánh giá giá trị các công nợ tài chính ghi nhận thông qua KQKD (Trước năm 2016),Loss from financial assets sales (Before 2016),cfs169,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ đánh giá giá trị các công cụ tài chính phái sinh (Trước năm 2016),Loss from derivatives (Before 2016),cfs170,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ từ thanh lý các tài sản tài chính sẵn sàng để bán (Trước năm 2016),Loss on valuation of available for sale financial assets (Before 2016),cfs171,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Suy giảm giá trị của các tài sản tài chính sẵn sàng để bán (Trước năm 2016),The decrease in value of available sales assets (Before 2016),cfs172,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ suy giảm giá trị các khoản đầu tư nắm giữ đến ngày đáo hạn (HTM),Loss on valuation of held to maturity investments,cfs173,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ suy giảm giá trị các khoản cho vay,Loss on the decrease in value of loans given,cfs174,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ về ghi nhận chênh lệch đánh giá theo giá trị hợp lý tài sản tài chính sẵn sàng để bán AFS khi phân loại lại,Loss recognized when reclassification of AFS is made and fair value is used for revaluation,cfs175,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ đánh giá giá các công cụ tài chính phát sinh cho mục đích phòng ngừa rủi ro (Trước năm 2016),Loss from derivatives for hedging purpose (Before 2016),cfs176,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ từ thanh lý TSCĐ (Trước năm 2016),Loss from sales of fixed assets (Before 2016),cfs177,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Suy giảm giá trị của các tài sản cố định, BĐSĐT",Decrease in value of fixed assets,cfs178,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Chi phí dự phòng suy giảm giá trị các khoản đầu tư tài chính dài hạn,Provision for decrease in value of long term financial investments,cfs179,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Lỗ từ thanh lý các khoản đầu tư vào công ty con và công ty liên doanh, liên kết (Trước năm 2016)","Loss from disposals or sales of investments in subsidiaries, associates and joint ventures (Before 2016)",cfs180,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lỗ khác,Other loss,cfs181,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Giảm các doanh thu phi tiền tệ,Decrease in non-cash revenue,cfs182,-13047367581.0,-9848604096.0,-10117767322.0,10580006284.0,-2720609617.0,-3451894379.0,-4334969430.0,-9342087401.0
+Lãi đánh giá giá trị các tài sản chính ghi nhận thông qua lãi/lỗ FVTPL,Profit from revaluation of fair value through profit and loss financial assets,cfs183,-13047367581.0,-9848604096.0,-10117767322.0,10580006284.0,-2720609617.0,-3451894379.0,-4334969430.0,-9342087401.0
+Lãi đánh giá giá trị các công nợ tài chính thông qua kết quả kinh doanh (Trước năm 2016),Profit from revaluation of fair value through profit and loss financial debts (Before 2016),cfs184,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lãi từ thanh lý các tài sản tài chính sẵn sàng để bán (Trước năm 2016),Profit from sales of available for sale assets (Before 2016),cfs185,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Hoàn nhập suy giảm giá trị của các tài sản tài chính sẵn sàng để bán (Trước năm 2016),Reversal of loss from available for sale assets (Before 2016),cfs186,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lãi về ghi nhận chệnh lệch đánh giá theo giá trị hợp lý tài sản tài chính sẵn sàng để bán AFS khi phân loại lại,Profit recognized when reclassification of AFS is made and fair value is used for revaluation,cfs187,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lãi đánh giá giá trị các công cụ tài chính phái sinh cho mục đích phòng ngừa,Profit from derivatives,cfs188,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lãi từ thanh lý các khoản cho vay và phải thu,Profit from the decrease in value of loans given,cfs189,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Hoàn nhập chi phí dự phòng,Reversal of provision,cfs190,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Lãi từ thanh lý tài sản cố định, BĐSĐT",Profit from sales of fixed assets and properties,cfs191,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Lãi từ thanh lý các khoản đầu tư vào công ty con và công ty liên doanh, liên kết","Profit from disposals or sales of investments in subsidiaries, associates and joint ventures",cfs192,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lãi khác,Other profit,cfs193,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Thay đổi tài sản và nợ phải trả hoạt động (Trước năm 2016),Change in assets and operating liabilities (Before 2016),cfs194,-5824917472022.0,-5022422039916.0,-4263554007071.0,608263680482.0,-3875085475638.0,-2520207481589.0,-923898874070.0,494007278204.0
+Tăng (giảm) tài sản tài chính ghi nhận thông qua lãi/ lỗ (FVTPL),Increase (decrease) in fair value through profit and loss financial assets,cfs195,-1163404290082.0,-841039767696.0,1499400141383.0,-891054615654.0,-253284872758.0,-701056789689.0,-408254290159.0,-33356766677.0
+Tăng (giảm) các khoản đầu tư giữ đến ngày đáo hạn (HTM),Increase (decrease) in held to marturity investments,cfs196,-1719959928706.0,-2344568960902.0,-431330593151.0,-624197900000.0,-704850000000.0,-279990000000.0,-221253143926.0,113173143926.0
+Tăng(giảm) các khoản cho vay,Increase (decrease) in loans given,cfs197,-4746855748137.0,-1075246035008.0,-5458983197439.0,3391789343557.0,-3027949414497.0,-1433940798670.0,-389114577669.0,315973354554.0
+Tăng (giảm) tài sản tài chính sẵn sàng để bán AFS,Increase (decrease) in available-for-sale financial assets,cfs198,-386368209323.0,-1444811830138.0,128412895626.0,-1272031058357.0,-4584328133.0,13518785000.0,96700649899.0,2138595306.0
+Tăng/giảm các tài sản khác,Increase (decrease) in other assets,cfs199,1655204226.0,2263653828.0,-1053253490.0,755556936.0,-1643666350.0,1490481870.0,-2227512215.0,96328951095.0
+Tăng/giảm các khoản phải thu (Trước năm 2016),Increase (decrease) in receivable (Before 2016),cfs200,2190015500000.0,680980900000.0,0.0,3002354000.0,117226806100.0,-120229160100.0,250000000.0,-250000000.0
+Tăng/giảm vay và nợ thuê tài sản tài chính (Trước năm 2016),Increase (decrease) in financial asset borrowings and financial lease (Before 2016),cfs201,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tăng/giảm vay tài sản tài chính (Trước năm 2016),Increase (decrease) in financial asset borrowings (Before 2016),cfs202,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tăng/giảm Trái phiếu chuyển đổi-Cấu phần nợ (Trước năm 2016),Increase (decrease) in convertible bond-equity portion (Before 2016),cfs203,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tăng/giảm Trái phiếu phát hành (Trước năm 2016),Increase (decrease) in issued bond (Before 2016),cfs204,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tăng/giảm vay Quỹ Hỗ trợ thanh toán (Trước năm 2016),Increase (decrease) in borrowing form Settlement Assistance Fund (Before 2016),cfs205,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(-) Tăng, (+) giảm phải thu bán các tài sản tài chính",Increase (decrease) in receivable form selling financial assets,cfs206,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(-) Tăng, (+) giảm phải thu và dự thu cổ tức, tiền lãi các tài sản tài chính",Increase (decrease) in receivable from interest of financial assets,cfs207,129524769648.0,178182935103.0,160510533957.0,80217061221.0,37631356752.0,22503477610.0,16842208135.0,19033259399.0
+"(-) Tăng, (+) giảm các khoản phải thu các dịch vụ CTCK cung cấp",Increase (decrease) in receivable from services rendered,cfs208,-1161422630.0,332439783.0,4344909723.0,8459371308.0,2283918146.0,146355437738.0,-9439886997.0,218353780933.0
+"(-) Tăng, (+) giảm các khoản phải thu về lỗi giao dịch các TSTC",Increase (decrease) in receivable from transaction errors,cfs209,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(+) Tăng, (-) giảm phải trả cho người bán",Increase (decrease) in trade payables,cfs210,-1847821744.0,-4756830945.0,-15071979540.0,10512924398.0,-389013596134.0,396063172453.0,4654963844.0,-1788180837.0
+"(+) Tăng, (-) giảm phải trả Tổ chức phát hành chứng khoán (Trước năm 2016)",Increase (decrease) in payables to securities issuers (Before 2016),cfs211,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(+) Tăng, (-) giảm các khoản trích nộp phúc lợi nhân viên",Increase (decrease) in contribution to employees' welfare,cfs212,-41968709.0,-103355800.0,884303430.0,-2931530147.0,1111996849.0,672782878.0,593143794.0,744244542.0
+"(+) Tăng, (-) giảm thuế và các khoản phải nộp Nhà nước",Increase (decrease) in tax and payables to authority,cfs213,7778490460.0,6984473980.0,-5664316889.0,-19596398598.0,27738066455.0,12234108373.0,-2241438131.0,1336253941.0
+"(+) Tăng, (-) giảm phải trả người lao động",Increase (decrease) in payables to employees,cfs214,1891851415.0,-3201721034.0,566938886.0,-10891699356.0,8368215704.0,6924980207.0,-1395371914.0,-2787215450.0
+"(+) Tăng, (-) giảm phải trả về lỗi giao dịch các tài sản tài chính",Increase (decrease) in payable arise form financial asset transaction error,cfs215,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền lãi đã thu,Interest received,cfs216,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền thu khác,Other receivables,cfs217,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản chi khác,Other expenses,cfs220,-49696422719.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"(-) Tăng, (+) giảm chi phí phải trả (không bao gồm chi phí lãi vay)",Increase/ (decrease) in payable expenses (excluding interest expenses),cfs223,73992302114.0,33650356687.0,6922725003.0,70708450657.0,106488015465.0,7697209011.0,-18463272968.0,-6599967155.0
+Chi trả thanh toán giao dịch chứng khoán của khách hàng,Cash outflow on securities transaction settlement of clients,cfs224,0.0,0.0,0.0,0.0,0.0,0.0,-1890349423683.0,0.0
+Chi trả cho hoạt động ủy thác đầu tư của khách hàng,Cash outflow on customers' entrusted investment activities,cfs225,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0

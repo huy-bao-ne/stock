@@ -1,0 +1,42 @@
+﻿item,item_en,item_id,2025,2024,2023,2022,2021,2020,2019,2018
+Lợi nhuận/(lỗ) trước thuế,Net profit/(loss) before tax,cfa1,499953402744.0,219657176231.0,78025419688.0,107650458937.0,84745343672.0,26238553001.0,21573748394.0,144586266448.0
+Khấu hao TSCĐ và BĐSĐT,Depreciation and amortization,cfa2,24144797280.0,17148915429.0,23144837501.0,26866757904.0,35711386045.0,35315524337.0,32301090570.0,44755832052.0
+Chi phí dự phòng,Provisions,cfa3,152898874860.0,49683711910.0,9137783050.0,88197486211.0,3434237990.0,-4487847550.0,23388612314.0,-18164407294.0
+Lãi/lỗ chênh lệch tỷ giá hối đoái do đánh giá lại các khoản mục tiền tệ có gốc ngoại tệ,Unrealized foreign exchange gain/(loss),cfa4,-324481257.0,-99230344.0,-32038340.0,18177878.0,-11936844.0,-361990371.0,-8262337.0,0.0
+Lãi/(lỗ) từ thanh lý tài sản cố định,Profit/loss from liquidating fixed assets,cfa5,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+(Lãi)/lỗ từ hoạt động đầu tư,Profit/loss from investing activities,cfa6,-30241376344.0,-46605545699.0,5285373342.0,-142109763182.0,-68916972023.0,-108131386463.0,-8457682579.0,-7161172711.0
+Chi phí lãi vay,Interest expense,cfa7,99791366947.0,159204600513.0,86451685310.0,74298442796.0,43556632562.0,11840888320.0,-9486673018.0,32644975752.0
+Thu lãi và cổ tức,Interest income and dividend,cfa8,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lợi nhuận/(lỗ) từ hoạt động kinh doanh trước những thay đổi vốn lưu động,Operating profit/(loss) before changes in Working Capital,cfa9,746222584230.0,398989628040.0,202013060551.0,154921560544.0,98518691402.0,-39586258726.0,59310833344.0,196661494247.0
+(Tăng)/giảm các khoản phải thu,(Increase)/decrease in receivables,cfa10,1033360239884.0,-276971156193.0,-360042810764.0,-475739921008.0,-308524375892.0,-95791989089.0,230464715550.0,-73804691670.0
+(Tăng)/giảm hàng tồn kho,(Increase)/decrease in inventories,cfa11,-391972888819.0,-676640327810.0,-1342712129286.0,-752603698152.0,-185770196090.0,-238681022189.0,-8621874019.0,-80517581696.0
+Tăng/(giảm) các khoản phải trả,Increase/(decrease) in payables,cfa12,-1085300353393.0,1052284208923.0,-9415827785.0,1229136418729.0,321335074276.0,300172696019.0,26377386898.0,-9344237180.0
+(Tăng)/giảm chi phí trả trước,(Increase)/decrease in prepaid expenses,cfa13,-15050681193.0,2750089092.0,893405115.0,2184228870.0,11276374501.0,49541206425.0,-59734287085.0,-4664721860.0
+Tiền lãi vay đã trả,Interest paid,cfa14,-228209527547.0,-512085425824.0,-16111789329.0,-4737674998.0,-19051782186.0,-16676886772.0,-1515591840.0,0.0
+Thuế thu nhập doanh nghiệp đã nộp,Corporate Income Tax paid,cfa15,-20724062929.0,-21736462262.0,-20549643450.0,-11685766356.0,-7079516812.0,-10123005376.0,-9990934208.0,0.0
+Tiền thu khác từ hoạt động kinh doanh,Other receipts from operating activities,cfa16,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền chi khác cho hoạt động kinh doanh,Other payments on operating activities,cfa17,-1825808000.0,-684157328.0,-270855000.0,-477118854.0,-61413000.0,-50290000.0,-27875000.0,0.0
+Lưu chuyển tiền tệ ròng từ các hoạt động sản xuất kinh doanh,Net cash inflows/(outflows) from operating activities,cfa18,36499502233.0,-34093603362.0,-1546196589948.0,140998028775.0,-89357143801.0,153652242966.0,31414580966.0,28330261841.0
+"Tiền chi để mua sắm, xây dựng TSCĐ và các tài sản dài hạn khác",Purchases of fixed assets and other long term assets,cfa19,-48350469835.0,-127528938263.0,-134057068557.0,-390647625537.0,-208939998795.0,-61528927184.0,-169658746102.0,-16385949182.0
+"Tiền thu từ thanh lý, nhượng bán TSCĐ và các tài sản dài hạn khác",Proceeds from disposal of fixed assets,cfa20,137681818.0,0.0,0.0,0.0,0.0,116639989184.0,40483494647.0,0.0
+"Tiền chi cho vay, mua các công cụ nợ của đơn vị khác","Loans granted, purchases of debt instruments",cfa21,-332099801501.0,-461897352575.0,-103580301371.0,-109720000000.0,-257056129376.0,-390338559645.0,-75574333293.0,-768250000.0
+"Tiền thu hồi cho vay, bán lại các công cụ nợ của đơn vị khác","Collection of loans, proceeds from sales of debts instruments",cfa22,273100000000.0,377234882763.0,261486211685.0,598077292988.0,44311791370.0,239402002938.0,16730000000.0,0.0
+Tiền chi đầu tư góp vốn vào đơn vị khác,Investments in other entities,cfa23,-40000000000.0,-11518000000.0,-3000000.0,-59440000000.0,-1170003000000.0,-76451680000.0,-27542650285.0,0.0
+Tiền thu hồi đầu tư góp vốn vào đơn vị khác,Proceeds from divestment in other entities,cfa24,0.0,0.0,0.0,449977000000.0,263000000.0,600000000.0,0.0,372000000.0
+"Tiền thu lãi cho vay, cổ tức và lợi nhuận được chia",Dividends and interest received,cfa25,17081323172.0,62565996230.0,5507323143.0,9389641620.0,9516106242.0,3592943532.0,246146664.0,4115958513.0
+Lưu chuyển tiền thuần từ hoạt động đầu tư,Net cash inflows/(outflows) from investing activities,cfa26,-130131266346.0,-161143411845.0,29353164900.0,497636309071.0,-1581908230559.0,-168084231175.0,-215316088369.0,-12666240669.0
+"Tiền thu từ phát hành cổ phiếu, nhận vốn góp của chủ sở hữu",Proceeds from issue of shares,cfa27,0.0,0.0,62500000000.0,0.0,0.0,80000000000.0,37403582959.0,11700000000.0
+"Tiền chi trả vốn góp cho các chủ sở hữu, mua lại cổ phiếu của doanh nghiệp đã phát hành",Payments for share returns and repurchases,cfa28,0.0,0.0,0.0,454545455.0,0.0,0.0,0.0,0.0
+Tiền thu được các khoản đi vay,Proceeds from loans,cfa29,1810388191449.0,2653678382951.0,2610682105411.0,1144603303679.0,2391297053121.0,299975828639.0,376618089364.0,94471222292.0
+Tiền trả nợ gốc vay,Repayment of loans,cfa30,-1655911489487.0,-2433591525266.0,-1142250779396.0,-1780797898306.0,-761133307927.0,-266175664206.0,-264028563389.0,-117548757674.0
+Tiền trả nợ gốc thuê tài chính,Finance lease principal payments,cfa31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+"Cổ tức, lợi nhuận đã trả cho chủ sở hữu",Dividends paid,cfa32,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Tiền lãi đã nhận,"Interests, dividends, profits received",cfa33,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Lưu chuyển tiền thuần từ hoạt động tài chính,Net cash inflows/(outflows) from financing activities,cfa34,154476701962.0,220086857685.0,1530931326015.0,-635740049172.0,1630163745194.0,113800164433.0,149993108934.0,-11377535382.0
+Lưu chuyển tiền thuần trong kỳ,Net increase in cash and cash equivalents,cfa35,60844937849.0,24849842478.0,14087900967.0,2894288674.0,-41101629166.0,99368176224.0,-33908398469.0,4286485790.0
+Tiền và tương đương tiền đầu kỳ,Cash and cash equivalents at the beginning of period,cfa36,123604355065.0,98754259915.0,84666171561.0,81790060765.0,122879753087.0,23344464435.0,57250776369.0,52964290579.0
+Ảnh hưởng của thay đổi tỷ giá hối đoái quy đổi ngoại tệ,Effect of foreign exchange differences,cfa37,403853.0,252672.0,187387.0,-18177878.0,11936844.0,167112428.0,2086535.0,0.0
+Tiền và tương đương tiền cuối kỳ,Cash and cash equivalents at the end of period,cfa38,184449696767.0,123604355065.0,98754259915.0,84666171561.0,81790060765.0,122879753087.0,23344464435.0,57250776369.0
+Phân bổ lợi thế thương mại,Amortization of goodwill,cfa103,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+Các khoản điều chỉnh khác,Other adjustments,cfa104,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0
+(Tăng)/giảm chứng khoán kinh doanh,(Increase)/decrease in trading securities,cfa105,0.0,0.0,0.0,0.0,0.0,204847792674.0,-204847792674.0,0.0

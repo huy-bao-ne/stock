@@ -1,0 +1,26 @@
+﻿mã_chứng_khoán,chỉ_báo,độ_tương_quan_%,kết_luận,độ_mạnh,p_value,có_ý_nghĩa_thống_kê,có_ý_nghĩa_sau_bonferroni,số_quan_sát
+GAS,lợi_nhuận_sau_thuế_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+GAS,eps_cơ_bản_% tăng trưởng,+77.1%,Đồng biến,Mạnh,0.0724,False,False,6
+GAS,doanh_thu_thuần_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+GAS,lợi_nhuận_gộp_% tăng trưởng,+65.7%,Đồng biến,Mạnh,0.1562,False,False,6
+GAS,vay_ngắn_hạn_% tăng trưởng,-54.3%,Nghịch biến,Trung bình,0.2657,False,False,6
+IDC,vay_ngắn_hạn_% tăng trưởng,+100.0%,Đồng biến,Rất mạnh,0.0,True,True,6
+IDC,hàng_tồn_kho_net_% tăng trưởng,-82.9%,Nghịch biến,Rất mạnh,0.0416,True,False,6
+IDC,doanh_thu_thuần_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+IDC,long_debt_ratio_%,-71.4%,Nghịch biến,Mạnh,0.0713,False,False,7
+IDC,asset_turnover,-60.7%,Nghịch biến,Mạnh,0.1482,False,False,7
+PGV,vay_ngắn_hạn_% tăng trưởng,-65.7%,Nghịch biến,Mạnh,0.1562,False,False,6
+PGV,eps_cơ_bản_% tăng trưởng,+60.0%,Đồng biến,Mạnh,0.2848,False,False,5
+PGV,asset_turnover,-54.3%,Nghịch biến,Trung bình,0.2657,False,False,6
+PGV,short_debt_ratio_%,-48.6%,Nghịch biến,Trung bình,0.3287,False,False,6
+PGV,tổng_tài_sản_% tăng trưởng,-48.6%,Nghịch biến,Trung bình,0.3287,False,False,6
+POW,doanh_thu_thuần_% tăng trưởng,-94.3%,Nghịch biến,Rất mạnh,0.0048,True,False,6
+POW,tổng_vốn_chủ_sở_hữu_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+POW,lợi_nhuận_gộp_% tăng trưởng,-77.1%,Nghịch biến,Mạnh,0.0724,False,False,6
+POW,vay_ngắn_hạn_% tăng trưởng,-60.0%,Nghịch biến,Mạnh,0.208,False,False,6
+POW,eps_cơ_bản_% tăng trưởng,-60.0%,Nghịch biến,Mạnh,0.208,False,False,6
+SIP,vay_dài_hạn_% tăng trưởng,+100.0%,Đồng biến,Rất mạnh,0.0,True,True,3
+SIP,tổng_tài_sản_% tăng trưởng,+90.0%,Đồng biến,Rất mạnh,0.0374,True,False,5
+SIP,eps_cơ_bản_% tăng trưởng,+90.0%,Đồng biến,Rất mạnh,0.0374,True,False,5
+SIP,doanh_thu_thuần_% tăng trưởng,+90.0%,Đồng biến,Rất mạnh,0.0374,True,False,5
+SIP,asset_turnover,-70.0%,Nghịch biến,Mạnh,0.1881,False,False,5

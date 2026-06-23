@@ -1,0 +1,10 @@
+[BẢNG TÀI CHÍNH TỪ CACHE - FPT]
+| Chỉ tiêu Tài chính | 2025-Q4 |
+| :--- |  :---:  |
+| **Doanh Thu Thuần (VND)** | 1,000 |
+| **Lợi Nhuận Sau Thuế (VND)** | 200 |
+| **Nợ Phải Trả (VND)** | 500 |
+| **Thu nhập trên CP (EPS)** | 2 |
+| **Biên LN Gộp (%)** | 0.20 |
+| **ROE (%)** | 0.10 |
+| **Hệ số P/E** | 10.00 |
