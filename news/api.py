@@ -1,3 +1,9 @@
+"""
+news/api.py
+============
+News & Analysis Agent — FastAPI backend 
+Tập trung 100% vào Bước 3: Phân tích Tác động Vĩ mô lên Chỉ báo tài chính (Factors).
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -8,19 +14,17 @@ from groq import Groq
 import urllib3
 import json
 import os
-import random
+import re
 
 from utils import file_lock, BASE_DIR, SUPPLY_CHAIN_FILE, is_valid_ticker, get_from_cache, save_to_cache
-from quant_engine import load_gold_factors, get_sentiment_from_llm, calculate_quant_score
-from trend_calculator import calculate_historical_trend
-from advanced_quant import calculate_valuation_zscore, calculate_piotroski_f_score, calculate_rsi_momentum
+from quant_engine import load_gold_factors
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-app = FastAPI(title="Deep Quant Agent PRO", version="5.0.0")
+app = FastAPI(title="Macro Analysis Agent", version="11.0.0")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "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")
+GROQ_API_KEY   = os.environ.get("GROQ_API_KEY", "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")
 TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY", "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")
 SERPER_API_KEY = os.environ.get("SERPER_API_KEY", "802d08dbed7f6aec0358572461b727719836aec7")
 
@@ -42,106 +46,132 @@ def get_supply_chain_logic(symbol: str):
 
 def agent3_search_macro_news(query: str):
     combined_results = ""
-    # FALLBACK: Nếu Serper lỗi, báo lỗi ra console nhưng vẫn chạy tiếp
     try:
         serper_res = requests.post(
             'https://google.serper.dev/search', 
             headers={'X-API-KEY': SERPER_API_KEY, 'Content-Type': 'application/json'}, 
-            data=json.dumps({'q': query, 'num': 3}), 
-            timeout=5
+            data=json.dumps({'q': query, 'num': 3}), timeout=5
         ).json()
         for item in serper_res.get('organic', []):
             combined_results += f"- {item.get('title')}: {item.get('snippet')}\n"
-    except Exception as e: print(f"[Fallback] Serper lỗi: {e}")
+    except: pass
 
-    # FALLBACK: Nếu Tavily lỗi, vẫn không crash app
     try:
         tavily_res = tavily_client.search(query=query, search_depth='basic', max_results=2)
         for item in tavily_res.get('results', []): 
             combined_results += f"- {item.get('content')}\n"
-    except Exception as e: print(f"[Fallback] Tavily lỗi: {e}")
+    except: pass
         
-    if not combined_results.strip():
-        return "Không có tin tức vĩ mô mới. Ưu tiên phân tích thuần định lượng."
-    return combined_results
+    return combined_results if combined_results.strip() else "Không có dữ liệu tin tức vĩ mô."
 
-def get_advanced_metrics_safe(symbol: str):
-    mock_pe_history = [12.5, 14.0, 11.2, 13.5, 15.1, 10.8]
-    val_zscore = calculate_valuation_zscore(random.uniform(9.0, 16.0), mock_pe_history)
-    health_fscore = calculate_piotroski_f_score({'roa_current': 0.05, 'cfo_current': 1500, 'net_income': 1200})
-    momentum_rsi = calculate_rsi_momentum(sorted([random.uniform(50, 60) for _ in range(20)]))
-    return val_zscore, health_fscore, momentum_rsi
+def parse_llm_json(raw_text: str) -> dict:
+    try:
+        cleaned_text = raw_text.replace('```json', '').replace('```', '').strip()
+        match = re.search(r'\{.*\}', cleaned_text, re.DOTALL)
+        if match: return json.loads(match.group(0))
+        return {}
+    except: return {}
 
 @app.post('/api/ask_agent')
 def ask_financial_agent(req: AgentRequest):
     try:
         prompt = req.prompt.strip()
         
-        # 1. CACHE LAYER (Tốc độ O(1))
         cached = get_from_cache(prompt)
         if cached: return cached
 
-        # 2. EXTRACT & VALIDATE TICKER
         macro_news = agent3_search_macro_news(prompt)
+        
+        extractor_prompt = f"""Trích xuất mã CK từ câu: '{prompt}'. Trả về JSON: {{"symbol": "MÃ"}}"""
         ext_res = groq_client.chat.completions.create(
             model='llama-3.3-70b-versatile',
-            messages=[{'role': 'user', 'content': f"""Trích xuất mã CK từ câu: '{prompt}'. Trả về JSON: {{"symbol": "MÃ"}}"""}],
-            temperature=0.0, response_format={"type": "json_object"}
+            messages=[{'role': 'user', 'content': extractor_prompt}],
+            temperature=0.0
         )
-        symbol = json.loads(ext_res.choices[0].message.content).get("symbol", "").upper().strip()
+        symbol = parse_llm_json(ext_res.choices[0].message.content).get("symbol", "").upper().strip()
 
         if not symbol: return {'ai_analysis': '❌ Hệ thống không nhận diện được mã cổ phiếu.', 'status': 'error'}
-        if not is_valid_ticker(symbol): return {'ai_analysis': f'⚠️ Mã **{symbol}** chưa được hỗ trợ Quant Analysis.', 'status': 'success'}
+        if not is_valid_ticker(symbol): return {'ai_analysis': f'⚠️ Mã **{symbol}** chưa được hỗ trợ.', 'status': 'success'}
 
-        # 3. RUN QUANT ENGINES
+        # Lấy Chuẩn hóa Chuỗi cung ứng và Danh sách Chỉ báo
         sc_logic = get_supply_chain_logic(symbol)
-        factors = load_gold_factors(symbol, BASE_DIR)
-        sentiment_json = get_sentiment_from_llm(groq_client, symbol, factors, macro_news) if factors else {}
-        quant_data = calculate_quant_score(factors, sentiment_json) if factors else {"signal": "KHÔNG ĐỦ DATA", "details": []}
-        val_zscore, health_fscore, momentum_rsi = get_advanced_metrics_safe(symbol)
+        sc_context = f"Cơ chế chuỗi cung ứng: {sc_logic['logic']}" if sc_logic else "Phân tích theo bản chất ngành."
+        factors_to_analyze = load_gold_factors(symbol, BASE_DIR)
 
-        # 4. LLM WRITER (Prompt rút gọn tối đa)
+        # Chuẩn bị bối cảnh chuỗi cung ứng cực nét
+        if sc_logic:
+            sc_context = f"- Động lực Đầu vào: {sc_logic.get('input_driver', 'Chưa rõ')}\n- Động lực Đầu ra: {sc_logic.get('output_driver', 'Chưa rõ')}\n- Bản chất cốt lõi: {sc_logic.get('logic', 'Chưa rõ')}"
+        else:
+            sc_context = "Tự xác định bản chất ngành. (Ví dụ: Ngành Công nghệ giá vốn là lương kỹ sư, Ngân hàng giá vốn là lãi suất huy động, Sản xuất giá vốn là nguyên vật liệu...)"
+
+        # GỌI LLM: PHÂN TÍCH TÁC ĐỘNG VĨ MÔ
         reasoning_prompt = f"""
-        BẠN LÀ CIO QUỸ HEDGE FUND. Phân tích mã {symbol}.
-        1. News: {macro_news}
-        2. Tín hiệu Quant: {quant_data['signal']}
-        3. Z-Score: {val_zscore['z_score']} ({val_zscore['status']})
-        4. F-Score: {health_fscore['score']}/9 ({health_fscore['status']})
-        5. RSI: {momentum_rsi['rsi']} ({momentum_rsi['status']})
+        BẠN LÀ CHUYÊN GIA PHÂN TÍCH VĨ MÔ LÕI CỦA QUỸ HEDGE FUND ĐẦU NGÀNH.
+        Phân tích tác động của sự kiện vĩ mô đối với mã cổ phiếu {symbol}.
         
-        Luật: Lạnh lùng, dứt khoát. Lý luận bằng số. Không nước đôi.
-        Output JSON: {{"event_summary": "1 câu", "investment_thesis": "3 câu luận điểm", "action_plan": "1 câu hành động"}}
+        [DỮ LIỆU BẮT BUỘC SỬ DỤNG]
+        1. Sự kiện vĩ mô (News): {macro_news}
+        2. Các chỉ báo cần đánh giá: {factors_to_analyze}
+        
+        [ĐẶC THÙ DOANH NGHIỆP {symbol} - KỶ LUẬT THÉP BẮT BUỘC TUÂN THỦ]
+        {sc_context}
+        ⚠️ LỆNH CẤM: 
+        - NẾU {symbol} LÀ CÔNG TY CÔNG NGHỆ, DỊCH VỤ, NGÂN HÀNG: TUYỆT ĐỐI KHÔNG dùng văn mẫu "tăng chi phí nguyên vật liệu đầu vào, giá dầu, đứt gãy chuỗi cung ứng hàng hóa". (Ví dụ: FPT sản xuất phần mềm, không mua dầu mỏ để làm ra phần mềm).
+        - CHỈ ĐƯỢC phân tích cơ chế dựa trên đúng Yếu tố Đầu vào/Đầu ra đã cung cấp (Tỷ giá, Lãi suất, Nhu cầu chi tiêu IT, v.v.).
+
+        [YÊU CẦU JSON ĐẦU RA - CHỈ DÙNG STRING]
+        {{
+            "event_nature": "Phân tích bản chất sự kiện, dòng tiền vĩ mô đang chạy đi đâu? (1-2 câu).",
+            "impact_direction": "TÍCH CỰC / TIÊU CỰC / TRUNG LẬP",
+            "factor_1_name": "Tên chỉ báo 1",
+            "factor_1_trend": "TĂNG / GIẢM / KHÔNG ĐỔI",
+            "factor_1_reason": "Giải thích ĐÚNG THEO MÔ HÌNH KINH DOANH. Tại sao sự kiện làm TĂNG/GIẢM chỉ báo này?",
+            "factor_2_name": "Tên chỉ báo 2",
+            "factor_2_trend": "TĂNG / GIẢM / KHÔNG ĐỔI",
+            "factor_2_reason": "Giải thích cơ chế truyền dẫn cực kỳ logic tài chính.",
+            "factor_3_name": "Tên chỉ báo 3",
+            "factor_3_trend": "TĂNG / GIẢM / KHÔNG ĐỔI",
+            "factor_3_reason": "Đào sâu vào động lực cốt lõi.",
+            "final_verdict": "Triển vọng đầu tư cơ bản."
+        }}
         """
         res_reasoning = groq_client.chat.completions.create(
             model='llama-3.3-70b-versatile',
             messages=[{'role': 'user', 'content': reasoning_prompt}],
-            temperature=0.2, response_format={"type": "json_object"}
+            temperature=0.2
         )
-        ai_text = json.loads(res_reasoning.choices[0].message.content)
+        ai = parse_llm_json(res_reasoning.choices[0].message.content)
 
-        # 5. MARKDOWN UI
-        markdown = f"### 🚀 BÁO CÁO HEDGE FUND: MÃ {symbol}\n\n*{ai_text.get('event_summary', '')}*\n\n"
-        markdown += f"#### 1. BẢNG MẠCH ĐỊNH LƯỢNG (DEEP QUANT)\n"
-        markdown += f"- **Định giá (Z-Score):** `{val_zscore['z_score']}` ➔ **{val_zscore['status']}**\n"
-        markdown += f"- **Sức khỏe (F-Score):** `{health_fscore['score']}/9` ➔ **{health_fscore['status']}**\n"
-        markdown += f"- **Động lượng (RSI 14):** `{momentum_rsi['rsi']}` ➔ **{momentum_rsi['status']}**\n\n"
+        # TRÌNH BÀY GIAO DIỆN MARKDOWN CHUẨN MỰC
+        markdown = f"### 📰 PHÂN TÍCH TÁC ĐỘNG VĨ MÔ: MÃ {symbol}\n\n"
+        markdown += f"**BẢN CHẤT SỰ KIỆN:**\n> {ai.get('event_nature', 'Đang cập nhật sự kiện...')}\n\n"
+        
+        markdown += f"#### 🎯 MỔ XẺ CƠ CHẾ TRUYỀN DẪN VÀO BÁO CÁO TÀI CHÍNH\n"
+        markdown += "| Chỉ báo trọng yếu (Factor) | Xu hướng bị tác động | Giải thích cơ chế (Tại sao?) |\n"
+        markdown += "|:---|:---:|:---|\n"
+        
+        for i in range(1, 4):
+            fname = ai.get(f'factor_{i}_name')
+            if not fname: continue
+            ftrend = ai.get(f'factor_{i}_trend', 'KHÔNG ĐỔI')
+            freason = ai.get(f'factor_{i}_reason', '')
+            
+            # Gắn icon cho đẹp
+            icon = "🟢" if "TĂNG" in ftrend.upper() else ("🔴" if "GIẢM" in ftrend.upper() else "⚪")
+            markdown += f"| **{fname}** | {icon} **{ftrend.upper()}** | {freason} |\n"
 
-        if factors:
-            markdown += f"#### 2. CƠ CHẾ TRUYỀN DẪN VĨ MÔ\n"
-            markdown += "| Yếu tố trọng yếu | Tương quan | Tác động Tin tức | Trend 5 Năm |\n|:---|:---:|:---:|:---:|\n"
-            for d in quant_data['details']:
-                corr = f"{'+' if d['correlation_with_price'] > 0 else ''}{d['correlation_with_price']*100:.1f}%"
-                trend = calculate_historical_trend([10, 12, 15, 14, 18]) 
-                sig_icon = "🟢 TÍCH CỰC" if d['news_sentiment'] > 0 else ("🔴 TIÊU CỰC" if d['news_sentiment'] < 0 else "⚪ TRUNG LẬP")
-                markdown += f"| **{d['factor']}** | {corr} | {sig_icon} | {trend} |\n"
-            markdown += "\n"
-
-        markdown += f"#### 3. LUẬN ĐIỂM ĐẦU TƯ\n> {ai_text.get('investment_thesis', '')}\n\n"
-        markdown += f"#### 🎯 KHUYẾN NGHỊ HÀNH ĐỘNG\n**{quant_data.get('signal', 'QUAN SÁT')}:** {ai_text.get('action_plan', '')}\n"
+        markdown += f"\n#### ⚖️ KẾT LUẬN TRIỂN VỌNG DOANH NGHIỆP\n"
+        
+        impact = ai.get('impact_direction', 'TRUNG LẬP')
+        impact_color = "text-emerald-600" if "TÍCH CỰC" in impact else ("text-rose-600" if "TIÊU CỰC" in impact else "text-slate-600")
+        markdown += f"- **Đánh giá tổng quan:** Tác động mang tính **{impact}**.\n"
+        markdown += f"- **Góc nhìn cơ bản:** {ai.get('final_verdict', '')}\n"
 
         final_response = {'ai_analysis': markdown, 'symbol': symbol, 'status': 'success'}
-        save_to_cache(prompt, final_response) # Lưu cache
+        save_to_cache(prompt, final_response) 
         return final_response
 
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return {'status': 'error', 'message': f'Lỗi hệ thống: {str(e)}'}
