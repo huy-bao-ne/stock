@@ -1,7 +1,7 @@
 {
-  "liveServer.settings.ignoreFiles": [
-    "**/.vscode/**",
-    "**/runtime_data/**",
-    "**/__pycache__/**"
-  ]
+    "liveServer.settings.ignoreFiles": [
+        "**/runtime_data/**",
+        "**/*.log",
+        "**/__pycache__/**"
+    ]
 }

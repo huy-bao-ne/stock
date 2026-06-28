@@ -3,6 +3,9 @@ import pandas as pd
 import json
 import re
 
+# Tắt cảnh báo Downcasting
+pd.set_option('future.no_silent_downcasting', True)
+
 def get_sector_of_ticker(ticker):
     ticker = ticker.upper()
     sector_map = {
@@ -18,22 +21,16 @@ def get_sector_of_ticker(ticker):
     return sector_map.get(ticker, 'unknown')
 
 def load_gold_factors(ticker, base_dir):
-    """
-    Chỉ lấy Tên các Chỉ báo tài chính từ headers của file CSV 
-    (Bỏ qua mã CK, năm, và các cột rác).
-    """
     sector = get_sector_of_ticker(ticker)
     if sector == 'unknown': return []
     csv_path = os.path.join(base_dir, '..', 'factor', 'data', sector, 'gold_factors.csv')
     
     if not os.path.exists(csv_path): return []
     try:
-        df = pd.read_csv(csv_path, nrows=0) # Chỉ đọc dòng Header cho nhanh
-        # Loại bỏ các cột không phải là chỉ báo tài chính
+        df = pd.read_csv(csv_path, nrows=0) 
         ignore_cols = ['mã_chứng_khoán', 'năm', 'năm_chưa_kết_thúc', 'thiếu_dữ_liệu']
         factors = [col for col in df.columns if col.lower() not in ignore_cols]
         
-        # Chọn ra 4 chỉ báo quan trọng nhất để AI phân tích (tránh quá tải)
         key_factors = []
         for f in factors:
             if 'doanh_thu' in f or 'lợi_nhuận' in f or 'roa' in f or 'roe' in f or 'margin' in f:

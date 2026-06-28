@@ -42,7 +42,7 @@
         /* 📊 Tối ưu hóa Bảng (Chống bóp chữ, thêm scroll ngang) */
         .markdown-content { overflow-x: auto; width: 100%; }
         .markdown-content table { 
-            width: 100%; min-width: 750px; /* Ép bảng luôn đủ rộng để không bóp chữ */
+            width: 100%; min-width: 750px; 
             border-collapse: separate; border-spacing: 0; 
             margin-top: 1.5rem; margin-bottom: 1.5rem; font-size: 0.9rem; 
             border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); 
@@ -82,10 +82,25 @@
 
         function StockAgent() {
             const [prompt, setPrompt] = useState('');
-            const [chatHistory, setChatHistory] = useState([]);
+            
+            // 🛡️ CẢI TIẾN LÕI: Nạp lịch sử lưu từ LocalStorage để chống sập khi Live Server tự động F5
+            const [chatHistory, setChatHistory] = useState(() => {
+                try {
+                    const savedHistory = localStorage.getItem('agent_chat_history');
+                    return savedHistory ? JSON.parse(savedHistory) : [];
+                } catch (error) {
+                    return [];
+                }
+            });
+            
             const [loading, setLoading] = useState(false);
             const messagesEndRef = useRef(null);
             const textareaRef = useRef(null);
+
+            // 🛡️ TỰ ĐỘNG KHÓA DỮ LIỆU: Lưu lịch sử hội thoại ngay khi có biến động tin nhắn
+            useEffect(() => {
+                localStorage.setItem('agent_chat_history', JSON.stringify(chatHistory));
+            }, [chatHistory]);
 
             const scrollToBottom = () => {
                 messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -97,7 +112,10 @@
             };
 
             const clearChat = () => {
-                if(confirm("Bạn có chắc muốn làm mới phiên hội thoại?")) setChatHistory([]);
+                if(confirm("Bạn có chắc muốn làm mới phiên hội thoại và xóa toàn bộ lịch sử?")) {
+                    setChatHistory([]);
+                    localStorage.removeItem('agent_chat_history'); // Xóa sạch trong bộ nhớ máy
+                }
             };
 
             const handleInputResize = (e) => {
@@ -171,7 +189,6 @@
                     </div>
 
                     <div className="flex-1 overflow-y-auto px-4 py-8 relative scroll-smooth">
-                        {/* 🚨 TĂNG ĐỘ RỘNG KHUNG CHAT TỪ max-w-4xl LÊN max-w-[1100px] 🚨 */}
                         <div className="max-w-[1100px] mx-auto space-y-8">
                             
                             {chatHistory.length === 0 && (
