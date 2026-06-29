@@ -38,9 +38,9 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 def serve_ui():
     return FileResponse("frontend/index.html")
 
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "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")      
-TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY", "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")   
-SERPER_API_KEY = os.environ.get("SERPER_API_KEY", "802d08dbed7f6aec0358572461b727719836aec7") 
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")      
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY", "")   
+SERPER_API_KEY = os.environ.get("SERPER_API_KEY", "") 
 
 groq_client = Groq(api_key=GROQ_API_KEY)
 tavily_client = TavilyClient(api_key=TAVILY_API_KEY)
