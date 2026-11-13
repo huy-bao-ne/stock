@@ -37,10 +37,10 @@ st.set_page_config(
 )
 
 # ======================================================================
-# CUSTOM THEME — fonts + colors nhất quán với báo cáo PowerPoint
-#   Headers : Source Serif 4  (cảm giác "báo cáo", giống Cambria trong PPTX)
+# CUSTOM THEME — fonts + colors nhất quán 
+#   Headers : Source Serif 4  
 #   Body    : IBM Plex Sans
-#   Số liệu : IBM Plex Mono   (cảm giác "terminal tài chính")
+#   Số liệu : IBM Plex Mono   
 #   Palette : Navy #0D1B3E · Teal #028090 · Mint #02C39A
 # ======================================================================
 
@@ -950,21 +950,35 @@ elif page == "🏢 Tra cứu ticker":
         st.warning("Không đọc được config.yaml")
         st.stop()
 
-    # Nhập ticker
+    # Chọn ticker từ dropdown — hiển thị đầy đủ tất cả mã
+    # Group tickers theo ngành để dễ tìm
+    sector_groups = {}
+    for t, sec in sorted(ticker_map.items()):
+        label = SECTORS.get(sec, sec)
+        if label not in sector_groups:
+            sector_groups[label] = []
+        sector_groups[label].append(t)
+
+    # Tạo options dạng "FPT (Công nghệ)"
+    options_display = ["— Chọn mã cổ phiếu —"]
+    options_value   = [""]
+    for label in sorted(sector_groups.keys()):
+        for t in sorted(sector_groups[label]):
+            options_display.append(f"{t}  ({label})")
+            options_value.append(t)
+
     col_input, col_btn = st.columns([3, 1])
     with col_input:
-        ticker_input = st.text_input(
-            "Nhập mã cổ phiếu",
-            placeholder="VD: VCB, FPT, SSI...",
-            max_chars=10,
-        ).strip().upper()
+        selected_idx = st.selectbox(
+            "Chọn mã cổ phiếu",
+            range(len(options_display)),
+            format_func=lambda i: options_display[i],
+        )
+        ticker_input = options_value[selected_idx]
     with col_btn:
         st.write("")
         st.write("")
         search = st.button("🔍 Tra cứu", use_container_width=True)
-
-    # Gợi ý tickers
-    st.caption(f"Tickers có dữ liệu: {', '.join(sorted(ticker_map.keys()))}")
 
     if ticker_input and (search or ticker_input):
         if ticker_input not in ticker_map:
@@ -1118,22 +1132,26 @@ elif page == "🤖 Chatbot":
     if "agent" not in st.session_state:
         st.session_state.agent = FinancialAgent(
             provider    = "groq",
-            model       = "llama-3.3-70b-versatile",
+            model       = "qwen/qwen3.6-27b",
             data_root   = "data",
             output_root = "outputs",
-            verbose     = False,
+            verbose     = True,
         )
 
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = []
 
     # ---- Sidebar nhỏ: reset hội thoại ----
-    col_title, col_reset = st.columns([5, 1])
+    col_title, col_reset, col_cache = st.columns([4, 1, 1])
     with col_reset:
         if st.button("🔄 Reset", use_container_width=True):
             st.session_state.agent.reset()
             st.session_state.chat_messages = []
             st.rerun()
+    with col_cache:
+        if st.button("🗑️ Cache", use_container_width=True, help="Xóa cache câu trả lời cũ"):
+            st.session_state.agent._cache.clear()
+            st.toast("✔ Đã xóa cache", icon="✅")
 
     st.divider()
 

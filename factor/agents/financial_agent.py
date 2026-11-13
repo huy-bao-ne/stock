@@ -22,7 +22,7 @@ Cách dùng:
     agent = FinancialAgent(
         provider="groq",
         api_key="gsk_...",
-        model="llama-3.3-70b-versatile",
+        model="llama-3.3-70b-specdec",
     )
 
     answer = agent.ask("Ngành nào có factor mạnh nhất?")
@@ -35,6 +35,8 @@ Cách dùng:
 
 import os
 import json
+import time
+import hashlib
 import pandas as pd
 from pathlib import Path
 from typing import Optional
@@ -48,6 +50,60 @@ from abc import ABC, abstractmethod
 class RateLimitError(Exception):
     """Raise khi Groq API bị rate limit sau tất cả retry attempts."""
     pass
+
+
+class SimpleCache:
+    """
+    Cache Q&A đơn giản — lưu vào file JSON, TTL 24 giờ.
+    Chỉ cache câu hỏi nặng (predict_ticker) để tránh gọi API lặp lại.
+    Cache key = hash(question.lower().strip()) để match câu hỏi tương tự.
+    """
+    TTL_SECONDS = 86400  # 24 giờ
+
+    def __init__(self, cache_file: str = "data/agent_cache.json"):
+        self.cache_file = Path(cache_file)
+        self.cache_file.parent.mkdir(parents=True, exist_ok=True)
+        self._data: dict = {}
+        self._load()
+
+    def _load(self):
+        if self.cache_file.exists():
+            try:
+                with open(self.cache_file, encoding="utf-8") as f:
+                    self._data = json.load(f)
+            except Exception:
+                self._data = {}
+
+    def _save(self):
+        try:
+            with open(self.cache_file, "w", encoding="utf-8") as f:
+                json.dump(self._data, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+    def _key(self, question: str) -> str:
+        return hashlib.md5(question.lower().strip().encode()).hexdigest()
+
+    def get(self, question: str) -> Optional[str]:
+        k = self._key(question)
+        entry = self._data.get(k)
+        if not entry:
+            return None
+        if time.time() - entry["ts"] > self.TTL_SECONDS:
+            del self._data[k]
+            self._save()
+            return None
+        return entry["answer"]
+
+    def set(self, question: str, answer: str):
+        k = self._key(question)
+        self._data[k] = {"question": question, "answer": answer, "ts": time.time()}
+        self._save()
+
+    def clear(self):
+        self._data = {}
+        if self.cache_file.exists():
+            self.cache_file.unlink()
 
 
 # ======================================================================
@@ -74,160 +130,60 @@ SECTOR_LABELS = {
 }
 
 SYSTEM_PROMPT = """Bạn là chuyên gia phân tích tài chính chứng khoán Việt Nam.
-Bạn có thể truy cập dữ liệu phân tích nhân tố (factor analysis) của 10 ngành:
-Ngân hàng, Bất động sản, Công nghệ, Thực phẩm & Đồ uống, Xây dựng,
-Vận tải - Kho bãi, SX Nhựa - Hóa chất, Tiện ích, Chứng khoán, Chăm sóc sức khỏe.
+Hệ thống có dữ liệu 10 ngành, 50 tickers, 2018-2024 (Spearman correlation + Bonferroni).
 
-Dữ liệu bao gồm:
-- Kết quả Spearman correlation giữa các chỉ báo tài chính và tỷ suất sinh lời cổ phiếu
-- Bonferroni correction để kiểm soát false positive
-- Dữ liệu tài chính chi tiết (ROA, ROE, NIM, growth rates...) từ 2018-2024
-- Giá cổ phiếu realtime từ vnstock
+TOOLS & KHI NÀO DÙNG:
+- predict_ticker(ticker,sector,question): Dự báo/xu hướng/nên mua-bán 1 ticker → LUÔN dùng tool này, KHÔNG tự gọi riêng lẻ get_ticker_factor_trend hay analyze_news_and_events.
+- load_sector_results(sectors,level,significant_only): Ranking factors theo ngành.
+- load_gold_dataset(sector,tickers,years,columns): Số liệu cụ thể (roa_%, roe_%, eps_cơ_bản...).
+- get_available_data(): Xem danh sách tickers/ngành có trong hệ thống.
+- fetch_latest_price(ticker,days): Giá realtime.
+- analyze_news_and_events(question,tickers): Tin tức — chỉ dùng khi KHÔNG cần dự báo.
+- get_ticker_factor_trend(ticker,sector,top_n): Trend lịch sử — chỉ dùng khi KHÔNG cần dự báo.
 
-QUAN TRỌNG — quy tắc dùng tool:
-- Khi cần dữ liệu, LUÔN gọi tool tương ứng. KHÔNG bịa số liệu.
-- Nếu câu hỏi không cần dữ liệu (chào hỏi, giải thích khái niệm chung), trả lời trực tiếp không cần gọi tool.
-- Sau khi có kết quả tool, trả lời ngắn gọn, rõ ràng, dựa đúng vào số liệu trả về.
-- KHI GỌI load_sector_results: nếu cần so sánh NHIỀU/TẤT CẢ ngành, để 'sectors' RỖNG ([])
-  — tool sẽ tự trả về dữ liệu của tất cả 10 ngành. KHÔNG liệt kê tất cả 10 mã ngành
-  vào tham số 'sectors' vì sẽ gây lỗi. Chỉ liệt kê cụ thể khi user hỏi về 1-2 ngành nhất định.
+50 TICKERS: BANKING(VCB,BID,CTG,TCB,VPB) REALESTATE(VIC,VHM,KSF,VRE,BCM) TECHNOLOGY(FPT,CTR,CMG,SGT,ELC) FOOD(MCH,VNM,MSN,SAB,SBT) CONSTRUCTION(THD,REE,HUT,LGC,VCG) TRANSPORT(VJC,HVN,GMD,VTP,PVT) CHEMICALS(GVR,DCM,DGC,DPM,BMP) UTILITIES(GAS,POW,PGV,IDC,SIP) SECURITIES(SSI,VND,HCM,MBS,VCI) HEALTHCARE(DHG,IMP,DHT,DBD,TRA)
 
-XỬ LÝ TICKER NGOÀI HỆ THỐNG:
-- Hệ thống chỉ có 50 tickers: BANKING (VCB,BID,CTG,TCB,VPB),
-  REALESTATE (VIC,VHM,KSF,VRE,BCM), TECHNOLOGY (FPT,CTR,CMG,SGT,ELC),
-  FOOD (MCH,VNM,MSN,SAB,SBT), CONSTRUCTION (THD,REE,HUT,LGC,VCG),
-  TRANSPORT (VJC,HVN,GMD,VTP,PVT), CHEMICALS (GVR,DCM,DGC,DPM,BMP),
-  UTILITIES (GAS,POW,PGV,IDC,SIP), SECURITIES (SSI,VND,HCM,MBS,VCI),
-  HEALTHCARE (DHG,IMP,DHT,DBD,TRA).
-- Nếu user hỏi về ticker KHÔNG có trong danh sách trên:
-  1. Thông báo rõ: "[TICKER] chưa có trong hệ thống phân tích (50 tickers hiện tại)."
-  2. Xác định ngành gần nhất của ticker đó dựa trên kiến thức của bạn
-     (ví dụ: HPG → Vật liệu xây dựng/Hóa chất → ngành CHEMICALS gần nhất)
-  3. Gọi load_sector_results cho ngành gần nhất đó
-  4. Trả lời: "Dựa trên phân tích ngành [TÊN NGÀNH] — ngành gần nhất với [TICKER],
-     các factors quan trọng nhất là... Bạn có thể áp dụng tham chiếu cho [TICKER]
-     nhưng cần lưu ý đây là suy luận từ ngành, không phải số liệu thực tế của công ty."
-  5. KHÔNG được bịa số liệu cụ thể (ROA, ROE...) cho ticker ngoài hệ thống.
-  6. Gợi ý các ticker trong hệ thống thuộc ngành gần nhất để user tham khảo thêm.
+TÊN CỘT ĐÚNG (load_gold_dataset): roa_%, roe_%, eps_cơ_bản, gross_margin_%, net_margin_%, debt_ratio_%, asset_turnover, lợi_nhuận_sau_thuế_% tăng trưởng, doanh_thu_thuần_% tăng trưởng. Banking thêm: nim_%, cir_%, ldr_%.
 
-KHI NÀO DÙNG analyze_news_and_events:
-- Câu hỏi về tin tức, sự kiện, vĩ mô: "tin tức gần đây về FPT", "lãi suất ảnh hưởng thế nào đến ngân hàng"
-- Câu hỏi về dự báo, xu hướng tương lai: "FPT có nên mua không", "triển vọng ngành công nghệ"
-- Câu hỏi kết hợp: "dựa trên ROA và tin tức gần đây, VCB có tốt không"
-- KHI DÙNG: truyền nguyên câu hỏi của user vào tham số 'question', thêm 'tickers' nếu biết
-- Nếu News Agent không chạy (lỗi kết nối), thông báo cho user và vẫn trả lời dựa trên dữ liệu tài chính hiện có
+TICKER NGOÀI HỆ THỐNG: Thông báo rõ → xác định ngành gần nhất → gọi load_sector_results ngành đó → nói đây là suy luận từ ngành, không phải số liệu thực của công ty.
 
-DỰ BÁO XU HƯỚNG GIÁ — DÙNG TOOL DUY NHẤT predict_ticker:
+CÂU HỎI VĨ MÔ KHÔNG CÓ TICKER CỤ THỂ (vd: "chiến tranh ảnh hưởng thế nào đến ngành chứng khoán"):
+- KHÔNG gọi predict_ticker (không có ticker để phân tích)
+- Gọi load_sector_results cho ngành liên quan (sectors=["SECURITIES"] nếu hỏi chứng khoán)
+- Gọi analyze_news_and_events với câu hỏi gốc
+- Tổng hợp: factors quan trọng nhất của ngành đó + tác động từ sự kiện vĩ mô
+- Trả lời bằng văn xuôi, KHÔNG dùng format predict_ticker
+- Chỉ gọi MỖI TOOL 1 LẦN DUY NHẤT, không lặp lại
 
-Khi user hỏi về dự báo, xu hướng, nên mua/bán, triển vọng 1 ticker cụ thể:
-- CHỈ gọi predict_ticker(ticker, sector, question) — KHÔNG tự gọi riêng lẻ
-  get_ticker_factor_trend hay analyze_news_and_events.
-- Tool này tự động lấy đủ data 2 nguồn (trend lịch sử + tin tức) theo đúng thứ tự.
-- Sau khi nhận kết quả, trình bày lại theo FORMAT BẮT BUỘC bên dưới —
-  CHỈ dùng số liệu có trong kết quả tool, KHÔNG bịa thêm.
-- Nếu chưa biết sector của ticker, gọi get_available_data trước để xác định.
+CHỐNG BỊA SỐ: Chỉ dùng số có trong kết quả tool. Nếu tool trả rỗng/lỗi → nói "không tìm thấy dữ liệu". KHÔNG tự suy ra số liệu.
 
-FORMAT BẮT BUỘC khi trình bày kết quả predict_ticker:
+LOAD_SECTOR_RESULTS: Nếu cần tất cả ngành → sectors=[] (rỗng). KHÔNG liệt kê cả 10 ngành.
 
+FORMAT KHI TRÌNH BÀY KẾT QUẢ predict_ticker:
 ---
 ## 📊 PHÂN TÍCH DỰ BÁO: [TICKER] — [Ngành]
-
 ### 🔍 Bối cảnh sự kiện
-[Nêu SỰ KIỆN CỤ THỂ từ tin tức: tên sự kiện, thời điểm, con số cụ thể]
-**Hướng tác động:** [TÍCH CỰC ↑ / TIÊU CỰC ↓ / HỖN HỢP ↕]
-
-### 📈 Bảng tương quan & Trend lịch sử (2018-2024)
-
+[Sự kiện cụ thể từ tin tức] **Hướng tác động:** [TÍCH CỰC ↑ / TIÊU CỰC ↓ / HỖN HỢP ↕]
+### 📈 BẢNG TƯƠNG QUAN & TREND LỊCH SỬ (2018-2024)
 | Factor | r với giá CP | Trend 2018-2024 | Giá trị 2023 | Giá trị 2024 | YoY |
 |--------|-------------|-----------------|--------------|--------------|-----|
-| [factor] | [r%] | [↑/↓/→] | [X%] | [Y%] | [+Z%] |
-
-> Nguồn: Phân tích Spearman Rank Correlation trên dữ liệu 2018-2024, [N] observations
-
-### 🎯 Đánh giá tác động tin tức lên từng factor
-
+### 🎯 ĐÁNH GIÁ TÁC ĐỘNG TIN TỨC LÊN TỪNG FACTOR
 | Factor bị ảnh hưởng | Tương quan (r) | Độ mạnh | Tác động tin tức | Tín hiệu |
 |---------------------|----------------|---------|-----------------|---------|
-| [factor] | [r%] | [Mạnh/TB/Yếu] | [Mô tả ngắn] | [↑/↓] |
-
-### 🔮 Dự báo xu hướng
-
-**Tín hiệu tổng hợp:** [TĂNG MẠNH / TĂNG NHẸ / TRUNG LẬP / GIẢM NHẸ / GIẢM MẠNH]
-
-**Lý luận:** [Dựa trên: factor X có r=Y% đang trend [Z] và tin tức cho thấy...]
-
-**Khung thời gian:** [Ngắn hạn 1-3 tháng / Trung hạn 3-6 tháng]
-
+### 🔮 DỰ BÁO XU HƯỚNG
+**Tín hiệu tổng hợp:** [TĂNG MẠNH/TĂNG NHẸ/TRUNG LẬP/GIẢM NHẸ/GIẢM MẠNH]
+**Lý luận:** [dựa trên số liệu thực] **Khung thời gian:** [Ngắn/Trung hạn]
 > ⚠️ Phân tích định tính. Không phải tư vấn đầu tư chắc chắn.
 ---
-
-Quy ước độ mạnh: **Mạnh** = |r| > 50% · **Trung bình** = 30–50% · **Yếu** = < 30% (áp dụng chính xác, không được nhầm)
-
-FORMAT BẮT BUỘC khi tổng hợp 2 nguồn (PHẢI có đủ các mục sau, đúng thứ tự):
-
----
-## 📊 PHÂN TÍCH TỔNG HỢP: [TICKER] — [Ngành]
-
-### 🔍 Bối cảnh tin tức & sự kiện
-[Tóm tắt 2-3 câu từ analyze_news_and_events — nêu sự kiện cụ thể]
-**Hướng tác động:** [TÍCH CỰC ↑ / TIÊU CỰC ↓ / HỖN HỢP ↕]
-
-### 📈 Bảng tương quan — Tác động lên giá cổ phiếu
-
-| Factor bị ảnh hưởng | Tương quan (r) | Độ mạnh | Tín hiệu |
-|---|---|---|---|
-| [tên_factor_1] | [+XX.X%] | [Mạnh/Trung bình/Yếu] | [↑ TĂNG / ↓ GIẢM] |
-| [tên_factor_2] | [+XX.X%] | [Mạnh/Trung bình/Yếu] | [↑ TĂNG / ↓ GIẢM] |
-
-> Quy ước độ mạnh: **Mạnh** = |r| > 50% · **Trung bình** = 30–50% · **Yếu** = < 30% (áp dụng chính xác, không được nhầm)
-
-### 🎯 Nhận định tổng hợp
-
-**Tín hiệu chính:** [TĂNG MẠNH / TĂNG NHẸ / TRUNG LẬP / GIẢM NHẸ / GIẢM MẠNH]
-
-[1-2 câu giải thích lý do dựa trên số liệu: factor nào mạnh nhất + direction từ tin tức]
-
-> ⚠️ **Lưu ý:** Phân tích định tính dựa trên dữ liệu lịch sử 2018-2024 và tin tức hiện tại.
-> Không phải dự báo chắc chắn. Tham khảo thêm trước khi quyết định đầu tư.
----
-
-TÊN CỘT FACTOR trong load_gold_dataset (PHẢI dùng đúng tên, chữ thường, có dấu % nếu có):
-- Banking: roa_%, roe_%, nim_%, cir_%, ldr_%, tỷ_lệ_dự_phòng_%, tỷ_lệ_nợ_%, eps_cơ_bản
-- Non-banking chung: roa_%, roe_%, gross_margin_%, net_margin_%, debt_ratio_%,
-  short_debt_ratio_%, long_debt_ratio_%, de_ratio, asset_turnover, eps_cơ_bản
-- Growth factors: tên_chỉ_tiêu_% tăng trưởng (ví dụ: doanh_thu_thuần_% tăng trưởng)
-- Nếu không chắc tên cột chính xác, gọi load_gold_dataset KHÔNG truyền 'columns'
-  để xem tất cả cột có sẵn trước.
-
-NGÔN NGỮ:
-- Trả lời HOÀN TOÀN bằng tiếng Việt (hoặc tiếng Anh nếu user hỏi tiếng Anh).
-- KHÔNG chêm từ/ký tự của ngôn ngữ khác (Trung, Hàn...) vào câu trả lời.
-
-CHỐNG BỊA SỐ LIỆU (RẤT QUAN TRỌNG):
-- Nếu tool trả về lỗi, bảng rỗng, hoặc KHÔNG chứa giá trị cụ thể được hỏi
-  (ví dụ: hỏi ROA nhưng kết quả không có cột roa_% với số liệu),
-  PHẢI trả lời "Không tìm thấy dữ liệu cho [chỉ số] của [ticker] năm [năm]"
-  — TUYỆT ĐỐI KHÔNG tự suy luận, làm tròn, hoặc đoán ra một con số.
-- Mọi số liệu trong câu trả lời PHẢI xuất hiện y nguyên (hoặc làm tròn nhẹ)
-  trong kết quả tool — nếu không tìm thấy số đó trong tool result, không được nói ra số đó.
-
-CẤU TRÚC DỮ LIỆU load_sector_results — TRÁNH HIỂU SAI:
-- Mỗi DÒNG trong bảng là 1 FACTOR ĐỘC LẬP. Cột 'độ_tương_quan_%' là tương quan
-  GIỮA factor đó VÀ tỷ suất sinh lời cổ phiếu (return) — KHÔNG phải tương quan
-  giữa 2 factor khác nhau với nhau.
-- KHÔNG được ghép 2 dòng khác nhau thành 1 câu kiểu "tương quan giữa A và B là X%".
-  Mỗi factor có % tương quan RIÊNG với return, không liên quan đến factor khác.
-- Khi mô tả factor mạnh nhất: chỉ nói TÊN factor đó + % tương quan CỦA NÓ với return.
-  Ví dụ ĐÚNG: "Factor 'lợi nhuận sau thuế % tăng trưởng' có tương quan +73.2% với
-  tỷ suất sinh lời cổ phiếu."
-  Ví dụ SAI: "tương quan 73.2% giữa lợi nhuận sau thuế và kết quả hoạt động"
-
-Nguyên tắc trả lời:
-- Giải thích ý nghĩa chỉ số bằng ngôn ngữ dễ hiểu
-- Nêu rõ giới hạn phân tích (sample size nhỏ, thời gian giới hạn...)
-- Trả lời bằng ngôn ngữ mà user dùng (Việt hoặc Anh)
-- Nhớ context của cuộc hội thoại để trả lời follow-up chính xác
+QUAN TRỌNG khi điền bảng TREND LỊCH SỬ: kết quả predict_ticker (PHẦN 1) đã có sẵn
+cột "Trend" (↑ TĂNG/↓ GIẢM/→ ỔN ĐỊNH) và dòng "Nhận xét trend" có công thức YoY
+("tăng/giảm X% so với năm Y"). PHẢI lấy đúng giá trị Trend và % YoY từ đó, KHÔNG
+được để trống "—" nếu dữ liệu gốc đã có. Nếu PHẦN 1 thật sự ghi "—" (do thiếu dữ liệu)
+thì mới giữ "—" trong bảng.
+Độ mạnh: Mạnh=|r|>50%, Trung bình=30-50%, Yếu=<30% (áp dụng chính xác).
+Trả lời bằng ngôn ngữ user dùng (Việt/Anh). KHÔNG chêm tiếng Trung/Hàn.
 """
+
 
 
 # ======================================================================
@@ -655,6 +611,9 @@ class ToolExecutor:
         output += "## PHẦN 1 — TREND LỊCH SỬ (2018-2024)\n" + trend_result + "\n\n"
 
         # ── BƯỚC 2: Tin tức & sự kiện ────────────────────────────
+        # Delay nhỏ giữa 2 bước để tránh burst requests lên Groq API
+        import time as _time
+        _time.sleep(2)
         news_result = self._analyze_news_and_events(question=question, tickers=[ticker])
         output += "## PHẦN 2 — TIN TỨC & SỰ KIỆN HIỆN TẠI\n" + news_result + "\n\n"
 
@@ -663,13 +622,37 @@ class ToolExecutor:
         factor_path  = self.output_root / sector_lower / f"{sector_lower}_factor_results.csv"
 
         output += "## PHẦN 3 — HƯỚNG DẪN TỔNG HỢP CHO BẠN (Llama)\n"
-        output += (
-            "Hãy trình bày lại PHẦN 1 và PHẦN 2 ở trên theo đúng FORMAT BẮT BUỘC "
-            "trong system prompt (có bảng Markdown, số liệu cụ thể từ 2 phần trên). "
-            "KHÔNG bịa thêm số liệu nào ngoài 2 phần đã cung cấp. "
-            "Nếu PHẦN 2 báo lỗi kết nối News Agent, vẫn trình bày PHẦN 1 đầy đủ "
-            "và ghi rõ chưa có dữ liệu tin tức.\n"
+
+        # Detect xem PHẦN 2 có thực sự có dữ liệu tin tức hay không
+        news_failed = (
+            "Không kết nối được News Agent" in news_result
+            or "Không tìm thấy dữ liệu tin tức" in news_result
+            or "News Agent trả về nội dung rỗng" in news_result
+            or "lỗi" in news_result.lower()[:200]
         )
+
+        if news_failed:
+            output += (
+                "⚠️ PHẦN 2 KHÔNG CÓ DỮ LIỆU TIN TỨC THẬT (lỗi kết nối hoặc không tìm thấy).\n"
+                "VẪN PHẢI dùng đúng FORMAT BẮT BUỘC trong system prompt (đầy đủ heading ###, "
+                "emoji, bảng Markdown) — chỉ thay đổi NỘI DUNG bên trong các mục sau:\n"
+                "1. Mục '🔍 Bối cảnh sự kiện': ghi rõ "
+                "'Không có dữ liệu tin tức (News Agent lỗi/không phản hồi).' "
+                "Hướng tác động: ghi 'KHÔNG XÁC ĐỊNH' (không được tự suy ra TÍCH CỰC/TIÊU CỰC/HỖN HỢP).\n"
+                "2. Bảng '🎯 ĐÁNH GIÁ TÁC ĐỘNG TIN TỨC LÊN TỪNG FACTOR': vẫn giữ bảng Markdown "
+                "nhưng cột 'Tác động tin tức' và 'Tín hiệu' ghi '— (không có dữ liệu)' cho mỗi factor.\n"
+                "3. Mục '🔮 Dự báo xu hướng': CHỈ dựa trên PHẦN 1 (trend lịch sử từ bảng), "
+                "ghi rõ trong phần Lý luận: 'Dự báo dựa thuần túy trên dữ liệu lịch sử do "
+                "thiếu dữ liệu tin tức hiện tại.'\n"
+                "TUYỆT ĐỐI KHÔNG được bỏ qua cấu trúc bảng Markdown chỉ vì thiếu tin tức — "
+                "PHẦN 1 (trend lịch sử) vẫn có đầy đủ dữ liệu thật để điền bảng.\n"
+            )
+        else:
+            output += (
+                "Hãy trình bày lại PHẦN 1 và PHẦN 2 ở trên theo đúng FORMAT BẮT BUỘC "
+                "trong system prompt (có bảng Markdown, số liệu cụ thể từ 2 phần trên). "
+                "KHÔNG bịa thêm số liệu nào ngoài 2 phần đã cung cấp.\n"
+            )
 
         return output
 
@@ -702,9 +685,11 @@ class ToolExecutor:
         df_factors["abs_r"] = df_factors["độ_tương_quan_%"].str.replace("%","").str.strip().astype(float).abs()
         top_factors = df_factors.nlargest(top_n, "abs_r")["chỉ_báo"].tolist()
 
-        # Load gold dataset cho ticker
+        # Load gold dataset cho ticker — chỉ lấy 3 năm gần nhất để giảm token
         df_gold = pd.read_csv(gold_path, encoding="utf-8-sig")
         df_ticker = df_gold[df_gold["mã_chứng_khoán"] == ticker.upper()].sort_values("năm")
+        if len(df_ticker) > 3:
+            df_ticker = df_ticker.tail(3)  # 2022, 2023, 2024
 
         if df_ticker.empty:
             return f"Không tìm thấy dữ liệu cho {ticker.upper()} trong {label}."
@@ -713,6 +698,16 @@ class ToolExecutor:
         avail_factors = [f for f in top_factors if f in df_ticker.columns]
         if not avail_factors:
             return f"Không tìm thấy cột factor trong gold dataset của {ticker.upper()}."
+
+        # Bỏ factor nếu tất cả giá trị đều 0 hoặc NaN — không có ý nghĩa phân tích
+        # (ví dụ: quỹ_phát_triển_khcn_% FPT không công bố → toàn 0.0%)
+        def _has_real_data(col):
+            vals = df_ticker[col].dropna().tolist()
+            return any(v != 0 for v in vals)
+
+        avail_factors = [f for f in avail_factors if _has_real_data(f)]
+        if not avail_factors:
+            return f"Không có factor nào có dữ liệu thực cho {ticker.upper()}."
 
         # Lấy thêm r cho từng factor
         r_map = dict(zip(df_factors["chỉ_báo"], df_factors["độ_tương_quan_%"]))
@@ -730,7 +725,7 @@ class ToolExecutor:
             r_val = r_map.get(factor, "N/A")
             values = df_ticker[factor].tolist()
 
-            # Tính trend: so sánh 3 năm gần nhất vs 3 năm đầu
+            # Tính trend: với 3 năm dùng so sánh đầu-cuối, với >=4 năm dùng nửa đầu/nửa cuối
             trend = "—"
             valid_vals = [v for v in values if pd.notna(v) and v != 0]
             if len(valid_vals) >= 4:
@@ -739,6 +734,16 @@ class ToolExecutor:
                 if second_half > first_half * 1.05:
                     trend = "↑ TĂNG"
                 elif second_half < first_half * 0.95:
+                    trend = "↓ GIẢM"
+                else:
+                    trend = "→ ỔN ĐỊNH"
+            elif len(valid_vals) >= 2:
+                # Chỉ có 2-3 giá trị (do giới hạn 3 năm gần nhất) → so sánh đầu vs cuối
+                first_val = valid_vals[0]
+                last_val  = valid_vals[-1]
+                if last_val > first_val * 1.05:
+                    trend = "↑ TĂNG"
+                elif last_val < first_val * 0.95:
                     trend = "↓ GIẢM"
                 else:
                     trend = "→ ỔN ĐỊNH"
@@ -824,6 +829,24 @@ class ToolExecutor:
                 or data.get("answer")
                 or str(data)
             )
+
+            # Kiểm tra nội dung có thực sự rỗng không (News Agent có thể trả
+            # status="success" nhưng các section bên trong đều trống "> \n").
+            # Đếm tỷ lệ dòng blockquote ('>') bị rỗng — nếu phần lớn rỗng,
+            # coi như News Agent không thực sự phân tích được gì.
+            lines = ai_analysis.split("\n")
+            quote_lines = [l for l in lines if l.strip().startswith(">")]
+            empty_quotes = [l for l in quote_lines if l.strip() in (">", "> ", ">  ")]
+            content_is_empty = (
+                len(quote_lines) > 0
+                and (len(empty_quotes) / len(quote_lines)) >= 0.5
+            )
+
+            if content_is_empty:
+                return (
+                    "Không tìm thấy dữ liệu tin tức (News Agent trả về nội dung rỗng). "
+                    "Không có sự kiện/tin tức nào để phân tích."
+                )
 
             # Lấy affected_factors và direction — cầu nối với correlation results
             affected = data.get("affected_factors", [])
@@ -995,33 +1018,79 @@ class GroqProvider(LLMProvider):
     Cài đặt: pip install openai
     API key: GROQ_API_KEY (lấy tại console.groq.com/keys)
 
-    Model gợi ý: 'llama-3.3-70b-versatile' (text, không reasoning, 128K context)
+    Model gợi ý: 'llama-3.3-70b-specdec' (text, không reasoning, 128K context)
     """
 
     BASE_URL = "https://api.groq.com/openai/v1"
 
-    def __init__(self, api_key: str, model: str = "llama-3.3-70b-versatile", max_tokens: int = 4096):
+    # Model routing: 70B cho câu hỏi phức tạp, 8B cho câu hỏi đơn giản
+    HEAVY_MODEL = "qwen/qwen3.6-27b"  # predict_ticker, analyze_news
+    LIGHT_MODEL = "qwen/qwen3.6-27b"     # tra cứu số liệu, ranking, giá
+
+    # Keywords quyết định dùng model nặng
+    HEAVY_KEYWORDS = [
+        "dự báo", "nên mua", "nên bán", "triển vọng", "xu hướng",
+        "có nên", "forecast", "predict", "buy", "sell", "phân tích tổng",
+        # Câu hỏi vĩ mô/sự kiện cần 70B để điều phối đúng
+        "ảnh hưởng", "tác động", "chiến tranh", "lãi suất",
+        "tỷ giá", "lạm phát", "sự kiện", "khủng hoảng",
+    ]
+
+    def __init__(self, api_key: str, model: str = "llama-3.3-70b-specdec", max_tokens: int = 4096):
         from openai import OpenAI
-        self.client     = OpenAI(api_key=api_key, base_url=self.BASE_URL)
-        self.model      = model
-        self.max_tokens = max_tokens
+        self.client        = OpenAI(api_key=api_key, base_url=self.BASE_URL)
+        self.model         = model   # model mặc định (override nếu cần)
+        self.max_tokens    = max_tokens
+        self._force_model  = (model != self.HEAVY_MODEL)  # True nếu user chỉ định model cụ thể
+
+    def _pick_model(self, messages: list) -> str:
+        """
+        Chọn model phù hợp dựa trên nội dung câu hỏi cuối cùng.
+        - Câu hỏi dự báo/phân tích tổng hợp → 70B (chính xác hơn)
+        - Câu hỏi tra cứu/số liệu đơn giản  → 8B  (nhanh hơn, rate limit cao hơn)
+        """
+        if self._force_model:
+            return self.model   # user đã chỉ định model cụ thể → dùng đúng model đó
+
+        # Lấy câu hỏi gần nhất của user
+        last_user = ""
+        for msg in reversed(messages):
+            if isinstance(msg, dict) and msg.get("role") == "user":
+                content = msg.get("content", "")
+                if isinstance(content, str):
+                    last_user = content.lower()
+                    break
+
+        # Nếu có tool predict_ticker trong messages gần đây → cần 70B
+        recent_str = str(messages[-3:]).lower()
+        if "predict_ticker" in recent_str:
+            return self.HEAVY_MODEL
+
+        # Kiểm tra keyword
+        if any(kw in last_user for kw in self.HEAVY_KEYWORDS):
+            return self.HEAVY_MODEL
+
+        return self.LIGHT_MODEL
 
     def chat(self, messages: list, tools: list, system: str) -> dict:
         import time
         import openai as openai_module
 
+        # Chọn model phù hợp cho câu hỏi này
+        active_model = self._pick_model(messages)
+
         # OpenAI/Groq format: system là 1 message riêng trong list, không phải param riêng
         full_messages = [{"role": "system", "content": system}] + messages
 
         # ── Retry with exponential backoff cho rate limit (429) ──────────
-        MAX_RETRIES = 4
-        BASE_DELAY  = 5   # giây — Groq thường reset sau 5-10s
+        MAX_RETRIES = 6
+        BASE_DELAY  = 10  # giây — Qwen/Groq reset sau 10-60s
 
         last_error = None
         for attempt in range(MAX_RETRIES):
             try:
                 response = self.client.chat.completions.create(
-                    model      = self.model,
+                    model      = active_model,
                     max_tokens = self.max_tokens,
                     tools      = _openai_tools(),
                     messages   = full_messages,
@@ -1031,14 +1100,18 @@ class GroqProvider(LLMProvider):
             except openai_module.RateLimitError as e:
                 last_error = e
                 if attempt == MAX_RETRIES - 1:
-                    raise RateLimitError(
-                        f"Đã thử {MAX_RETRIES} lần nhưng vẫn bị rate limit. "
-                        f"Vui lòng đợi 30-60 giây rồi thử lại."
+                    print(f"[Rate limit] Đã thử {MAX_RETRIES} lần, vẫn bị limit. Dừng lại.", flush=True)
+                raise RateLimitError(
+                        f"Đã thử {MAX_RETRIES} lần (tổng ~{sum(BASE_DELAY * (2**i) for i in range(MAX_RETRIES))}s) "
+                        f"nhưng vẫn bị rate limit. Vui lòng đợi 1-2 phút rồi thử lại."
                     ) from e
                 wait = BASE_DELAY * (2 ** attempt)   # 5 → 10 → 20 → 40s
                 # GroqProvider không có verbose — dùng print trực tiếp
-                print(f"[Rate limit] Đợi {wait}s rồi thử lại (lần {attempt+1}/{MAX_RETRIES})...")
-                time.sleep(wait)
+                print(f"[Rate limit] Chạm giới hạn API. Đợi {wait}s rồi thử lại (lần {attempt+1}/{MAX_RETRIES})...", flush=True)
+                for remaining in range(wait, 0, -5):
+                    print(f"  → Còn {remaining}s...", flush=True)
+                    time.sleep(min(5, remaining))
+                print(f"  → Thử lại ngay bây giờ...", flush=True)
                 continue
 
             except openai_module.BadRequestError as e:
@@ -1049,20 +1122,28 @@ class GroqProvider(LLMProvider):
                 # khác nhau giữa các phiên bản SDK.
                 err_str = str(e)
 
-                if "tool_use_failed" in err_str:
+                # Groq có thể trả về 2 dạng lỗi khi Llama sinh tool call sai format:
+                # - "tool_use_failed" (lỗi cũ)
+                # - "tool call validation failed" (lỗi mới khi tool name bị ghép sai)
+                is_tool_format_error = (
+                    "tool_use_failed" in err_str
+                    or "tool call validation failed" in err_str
+                    or "attempted to call tool" in err_str
+                )
+
+                if is_tool_format_error:
                     retry_messages = full_messages + [{
                         "role": "system",
                         "content": (
-                            "Lệnh gọi tool trước bị lỗi vì tham số quá phức tạp (mảng quá dài). "
-                            "Hãy gọi lại tool đó với cách đơn giản hơn: "
-                            "BỎ TRỐNG tham số 'sectors' (để trống [] hoặc không truyền) "
-                            "để lấy dữ liệu TẤT CẢ các ngành cùng lúc, "
-                            "hoặc chỉ truyền 1-2 ngành cụ thể nếu chỉ cần vài ngành. "
-                            "KHÔNG liệt kê cả 10 ngành trong 1 lần gọi."
+                            "Lệnh gọi tool trước bị lỗi format — tên tool và tham số "
+                            "bị ghép sai cú pháp. Hãy gọi lại ĐÚNG 1 tool duy nhất "
+                            "với tham số đơn giản. Với predict_ticker chỉ cần: "
+                            "ticker (mã CP), sector (ngành viết HOA), question (câu hỏi ngắn). "
+                            "KHÔNG dùng cú pháp function=name,{...} — dùng đúng tool call format."
                         ),
                     }]
                     response = self.client.chat.completions.create(
-                        model      = self.model,
+                        model      = active_model,
                         max_tokens = self.max_tokens,
                         tools      = _openai_tools(),
                         messages   = retry_messages,
@@ -1175,7 +1256,7 @@ class GoogleProvider(LLMProvider):
 
 PROVIDER_DEFAULT_MODELS = {
     "anthropic": "claude-opus-4-5",
-    "groq":      "llama-3.3-70b-versatile",
+    "groq":      "llama-3.3-70b-specdec",
     "openai":    "gpt-4o",
     "google":    "gemini-1.5-pro",
 }
@@ -1259,6 +1340,7 @@ class FinancialAgent:
         self.verbose        = verbose
         self.max_tool_turns = max_tool_turns
         self._history: list = []
+        self._cache         = SimpleCache(cache_file=f"{data_root}/agent_cache.json")
 
     # ------------------------------------------------------------------
     # PUBLIC API
@@ -1269,6 +1351,21 @@ class FinancialAgent:
         Gửi câu hỏi — agent nhớ context từ các câu trước.
         Raises: RateLimitError nếu Groq rate limit sau tất cả retry.
         """
+        # Cache check — cache câu hỏi nặng (dự báo, phân tích sự kiện vĩ mô)
+        _is_heavy = any(kw in question.lower() for kw in
+                        ["dự báo", "nên mua", "nên bán", "triển vọng", "xu hướng",
+                         "có nên", "forecast", "predict", "buy", "sell",
+                         # Thêm: câu hỏi sự kiện vĩ mô cũng nặng token
+                         "ảnh hưởng", "tác động", "chiến tranh", "lãi suất",
+                         "tỷ giá", "lạm phát", "sự kiện", "khủng hoảng",
+                         "phân tích", "đánh giá", "nhận định"])
+        if _is_heavy:
+            cached = self._cache.get(question)
+            if cached:
+                if self.verbose:
+                    print(f"[Cache HIT] Returning cached answer")
+                return f"*(Từ cache — cập nhật mỗi 24h)*\n\n{cached}"
+
         self._history.append({"role": "user", "content": question})
 
         if self.verbose:
@@ -1319,6 +1416,13 @@ class FinancialAgent:
                         answer += block["text"]
                 answer = answer.strip()
                 self._history.append({"role": "assistant", "content": answer})
+
+                # Lưu vào cache nếu là câu hỏi nặng (dự báo/phân tích tổng hợp)
+                if _is_heavy and answer:
+                    self._cache.set(question, answer)
+                    if self.verbose:
+                        print(f"[Cache SAVE] Đã lưu câu trả lời vào cache")
+
                 return answer
 
             else:

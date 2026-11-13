@@ -1,0 +1,112 @@
+[
+  {
+    "key": "BANKING",
+    "label": "Ngân hàng",
+    "factors_tested": 20,
+    "observations_max": 34,
+    "significant_p05": 0,
+    "significant_bonferroni": 0,
+    "top_factor": "tổng_vốn_chủ_sở_hữu_% tăng trưởng",
+    "top_correlation": "+21.8%",
+    "top_correlation_value": 21.8
+  },
+  {
+    "key": "REALESTATE",
+    "label": "Bất động sản",
+    "factors_tested": 25,
+    "observations_max": 30,
+    "significant_p05": 4,
+    "significant_bonferroni": 1,
+    "top_factor": "vay_ngắn_hạn_% tăng trưởng",
+    "top_correlation": "-60.2%",
+    "top_correlation_value": -60.2
+  },
+  {
+    "key": "TECHNOLOGY",
+    "label": "Công nghệ",
+    "factors_tested": 24,
+    "observations_max": 35,
+    "significant_p05": 4,
+    "significant_bonferroni": 2,
+    "top_factor": "eps_cơ_bản_% tăng trưởng",
+    "top_correlation": "+57.5%",
+    "top_correlation_value": 57.5
+  },
+  {
+    "key": "FOOD",
+    "label": "Thực phẩm & Đồ uống",
+    "factors_tested": 23,
+    "observations_max": 35,
+    "significant_p05": 4,
+    "significant_bonferroni": 2,
+    "top_factor": "lợi_nhuận_gộp_% tăng trưởng",
+    "top_correlation": "+72.1%",
+    "top_correlation_value": 72.1
+  },
+  {
+    "key": "CONSTRUCTION",
+    "label": "Xây dựng",
+    "factors_tested": 22,
+    "observations_max": 32,
+    "significant_p05": 0,
+    "significant_bonferroni": 0,
+    "top_factor": "vay_ngắn_hạn_% tăng trưởng",
+    "top_correlation": "+30.3%",
+    "top_correlation_value": 30.3
+  },
+  {
+    "key": "TRANSPORT",
+    "label": "Vận tải - Kho bãi",
+    "factors_tested": 22,
+    "observations_max": 34,
+    "significant_p05": 6,
+    "significant_bonferroni": 0,
+    "top_factor": "tổng_vốn_chủ_sở_hữu_% tăng trưởng",
+    "top_correlation": "+47.3%",
+    "top_correlation_value": 47.3
+  },
+  {
+    "key": "CHEMICALS",
+    "label": "SX Nhựa - Hóa chất",
+    "factors_tested": 23,
+    "observations_max": 34,
+    "significant_p05": 3,
+    "significant_bonferroni": 0,
+    "top_factor": "lợi_nhuận_sau_thuế_% tăng trưởng",
+    "top_correlation": "+43.2%",
+    "top_correlation_value": 43.2
+  },
+  {
+    "key": "UTILITIES",
+    "label": "Tiện ích",
+    "factors_tested": 22,
+    "observations_max": 31,
+    "significant_p05": 0,
+    "significant_bonferroni": 0,
+    "top_factor": "eps_cơ_bản_% tăng trưởng",
+    "top_correlation": "+28.9%",
+    "top_correlation_value": 28.9
+  },
+  {
+    "key": "SECURITIES",
+    "label": "Chứng khoán",
+    "factors_tested": 23,
+    "observations_max": 35,
+    "significant_p05": 14,
+    "significant_bonferroni": 12,
+    "top_factor": "lợi_nhuận_sau_thuế_% tăng trưởng",
+    "top_correlation": "+73.2%",
+    "top_correlation_value": 73.2
+  },
+  {
+    "key": "HEALTHCARE",
+    "label": "Chăm sóc sức khỏe",
+    "factors_tested": 22,
+    "observations_max": 35,
+    "significant_p05": 2,
+    "significant_bonferroni": 0,
+    "top_factor": "eps_cơ_bản_% tăng trưởng",
+    "top_correlation": "-50.1%",
+    "top_correlation_value": -50.1
+  }
+]

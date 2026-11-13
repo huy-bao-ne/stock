@@ -1,7 +1,0 @@
-{
-    "liveServer.settings.ignoreFiles": [
-        "**/runtime_data/**",
-        "**/*.log",
-        "**/__pycache__/**"
-    ]
-}

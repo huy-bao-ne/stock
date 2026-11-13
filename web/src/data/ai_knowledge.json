@@ -1,0 +1,115 @@
+{
+  "overview": {
+    "totalSectors": 10,
+    "totalTickers": 50,
+    "dataPeriod": "2018 - 2024",
+    "methodology": "Spearman Rank Correlation kết hợp Bonferroni Correction để loại bỏ false positive (p < alpha/n)."
+  },
+  "sectorsSummary": [
+    {
+      "sector": "Ngân hàng",
+      "code": "BANKING",
+      "testedFactors": 20,
+      "significantP005": 0,
+      "significantBonferroni": 0,
+      "strongestFactor": "tổng_vốn_chủ_sở_hữu_% tăng trưởng",
+      "correlation": "+21.8%",
+      "pValue": 0.2471
+    },
+    {
+      "sector": "Bất động sản",
+      "code": "REALESTATE",
+      "testedFactors": 25,
+      "significantP005": 4,
+      "significantBonferroni": 1,
+      "strongestFactor": "vay_ngắn_hạn_% tăng trưởng",
+      "correlation": "-60.2%",
+      "pValue": 0.0009
+    },
+    {
+      "sector": "Công nghệ",
+      "code": "TECHNOLOGY",
+      "testedFactors": 24,
+      "significantP005": 4,
+      "significantBonferroni": 2,
+      "strongestFactor": "eps_cơ_bản_% tăng trưởng",
+      "correlation": "+57.5%",
+      "pValue": 0.0011
+    },
+    {
+      "sector": "Thực phẩm & Đồ uống",
+      "code": "FOOD",
+      "testedFactors": 23,
+      "significantP005": 4,
+      "significantBonferroni": 2,
+      "strongestFactor": "lợi_nhuận_gộp_% tăng trưởng",
+      "correlation": "+72.1%",
+      "pValue": 0
+    },
+    {
+      "sector": "Xây dựng",
+      "code": "CONSTRUCTION",
+      "testedFactors": 22,
+      "significantP005": 0,
+      "significantBonferroni": 0,
+      "strongestFactor": "vay_ngắn_hạn_% tăng trưởng",
+      "correlation": "+30.3%",
+      "pValue": 0.1239
+    },
+    {
+      "sector": "Vận tải - Kho bãi",
+      "code": "TRANSPORT",
+      "testedFactors": 22,
+      "significantP005": 6,
+      "significantBonferroni": 0,
+      "strongestFactor": "tổng_vốn_chủ_sở_hữu_% tăng trưởng",
+      "correlation": "+47.3%",
+      "pValue": 0.0083
+    },
+    {
+      "sector": "SX Nhựa - Hóa chất",
+      "code": "CHEMICALS",
+      "testedFactors": 23,
+      "significantP005": 3,
+      "significantBonferroni": 0,
+      "strongestFactor": "lợi_nhuận_sau_thuế_% tăng trưởng",
+      "correlation": "+43.2%",
+      "pValue": 0.0171
+    },
+    {
+      "sector": "Tiện ích",
+      "code": "UTILITIES",
+      "testedFactors": 22,
+      "significantP005": 0,
+      "significantBonferroni": 0,
+      "strongestFactor": "eps_cơ_bản_% tăng trưởng",
+      "correlation": "+28.9%",
+      "pValue": 0.1441
+    },
+    {
+      "sector": "Chứng khoán",
+      "code": "SECURITIES",
+      "testedFactors": 23,
+      "significantP005": 14,
+      "significantBonferroni": 12,
+      "strongestFactor": "lợi_nhuận_sau_thuế_% tăng trưởng",
+      "correlation": "+73.2%",
+      "pValue": 0
+    },
+    {
+      "sector": "Chăm sóc sức khỏe",
+      "code": "HEALTHCARE",
+      "testedFactors": 22,
+      "significantP005": 2,
+      "significantBonferroni": 0,
+      "strongestFactor": "eps_cơ_bản_% tăng trưởng",
+      "correlation": "-50.1%",
+      "pValue": 0.0048
+    }
+  ],
+  "keyFindings": [
+    "Ngành Công nghệ (TECHNOLOGY): Tăng trưởng EPS (+57.5%) và Tăng trưởng Lợi nhuận sau thuế (+57.4%) có tương quan đồng biến mạnh nhất và đạt chuẩn Bonferroni nghiêm ngặt.",
+    "Ngành Bất động sản (REALESTATE): Doanh thu thuần (+39.4%) và Vốn chủ sở hữu có tác động đáng kể đến giá cổ phiếu.",
+    "Ngành Ngân hàng (BANKING): Tăng trưởng vốn chủ sở hữu (+21.8%) là factor đứng đầu, tuy nhiên do biến động theo chu kỳ nợ xấu nên cần cẩn trọng với Bonferroni threshold."
+  ]
+}
